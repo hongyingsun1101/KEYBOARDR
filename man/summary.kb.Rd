@@ -75,15 +75,15 @@ nxt.comb <- next.comb.kb(target=0.25, npts=n, ntox=y, dose.curr=c(1, 1))
 summary.kb(nxt.comb)
 
 ## get.oc.obd
-toxicity.low <- 0.15
-toxicity.moderate <- 0.33
-toxicity.high <- 0.40
-efficacy.low <- 0.20
-efficacy.moderate <- 0.40
-efficacy.high <- 0.60
-target.toxicity <- 0.30
-target.efficacy <- 0.40
-p.true <-c(0.08,0.30,0.60,0.80)
+ toxicity.low <- 0.15
+ toxicity.moderate <- 0.25
+ toxicity.high <- 0.35
+ efficacy.low <- 0.25
+ efficacy.moderate <- 0.45
+ efficacy.high <- 0.65
+ target.toxicity=0.20
+ target.efficacy=0.40
+p.true <-c(0.08,0.20,0.60,0.80)
 q.true <- c(0.25,0.40,0.25,0.50)
 oc.obd.kb <- get.oc.obd.kb(toxicity.low = toxicity.low,
              toxicity.moderate= toxicity.moderate,

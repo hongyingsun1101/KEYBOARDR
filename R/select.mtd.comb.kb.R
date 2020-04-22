@@ -100,7 +100,7 @@
 #' \emph{Clinical Cancer Research}. 2017; 23:3994-4003.
 #' http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
 #' 2. Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials
-#' \emphh{Contemporary Clinical Trials}. 2020
+#' \emph{Contemporary Clinical Trials}. 2020
 #' https://doi.org/10.1016/j.cct.2020.105972
 #'
 #'
