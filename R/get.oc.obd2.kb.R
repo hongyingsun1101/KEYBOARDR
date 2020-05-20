@@ -1,54 +1,51 @@
+#' Generate Operating Characteristics for OBD Finding Automaticallly
 #'
-#' Generate Operating Characteristics for OBD Finding
+#' This function reports operating characteristics for optimal biological dose (OBD) finding automatically.
 #'
-#' Report operating characteristics for optimal biological dose (OBD) finding
-#'
-#' @param target.toxicity the target toxicity rate
-#' @param target.efficacy the target efficacy rate
-#' @param ncohort the total number of cohorts
-#' @param cohortsize the cohortsize
-#' @param n.early the early stopping parameter. If the number of patients treated at
-#'                the current dose reaches \code{n.early}, stop the trial
-#'                and select the optimal biological dose (OBD) based on the observed data. The default
-#'                value \code{n.early=100} essentially turns off the type
-#'                of early stopping.
-#' @param startdose the starting dose level
-#' @param p.true a vector containing the true toxicity probabilities of the
+#' @param target.toxicity The target DLT rate.
+#' @param target.efficacy The target efficacy rate.
+#' @param ncohort The total number of cohorts.
+#' @param cohortsize The number of patients in the cohort.
+#' @param n.early The early stopping parameter. If the number of patients treated at
+#'                the current dose reaches \code{n.early}, then we stop the trial
+#'                and select the optimal biological dose (OBD) based on the observed data. The default value is 100.
+#' @param startdose The starting dose level.
+#' @param p.true A vector containing the true toxicity probabilities of the
 #'              investigational dose levels.
-#' @param q.true a vector containing the true efficacy  probabilities of the
+#' @param q.true A vector containing the true efficacy  probabilities of the
 #'              investigational dose levels.
-#' @param ntrial the total number of trials to be simulated
-#' @param seed the random seed for simulation
-#' @param p1 the cutoff lower limit for safety utility function 1, described in the Details section.
-#' @param p2 the cutoff upper limit for safety utility function 1, described in the Details section.
-#' @param q1 the cutoff lower limit for efficacy utility function 1, described in the Details section.
-#' @param q2 the cutoff upper limit for efficacy utility function 1, described in the Details section.
-#' @param cutoff.eli.toxicity the cutoff to eliminate a dose with unacceptable high toxicity for safety.
-#'                           The recommended value is (\code{cutoff.eli.toxicity=0.95}).
-#' @param cutoff.eli.efficacy the cutoff for the futility rule, the acceptable lowest efficacy.
-#'                            The recommended value is  (\code{cutoff.eli.toxicity=0.3})
-#' @param w1.toxicity the weight for toxicity utility function 2 and 3, described in the Details section.
-#' @param w2.toxicity the weight for toxicity utility function 3, described in the Details section.
-#' @param indicator the indicator cutoff for utility function 3, described in the Details section.
+#' @param ntrial The total number of trials to be simulated.
+#' @param seed The random seed for simulation.
+#' @param p1 The cutoff lower limit for safety utility function 1, described in the Details section.
+#' @param p2 The cutoff upper limit for safety utility function 1, described in the Details section.
+#' @param q1 The cutoff lower limit for efficacy utility function 1, described in the Details section.
+#' @param q2 The cutoff upper limit for efficacy utility function 1, described in the Details section.
+#' @param cutoff.eli.toxicity The cutoff to eliminate a dose with unacceptable high toxicity for safety.
+#'                           The recommended value is 0.95.
+#' @param cutoff.eli.efficacy The cutoff for the futility rule, the acceptable lowest efficacy.
+#'                            The recommended value is 0.30.
+#' @param w1.toxicity The weight for toxicity utility function 2 and 3, described in the Details section.
+#' @param w2.toxicity The weight for toxicity utility function 3, described in the Details section.
+#' @param indicator The indicator cutoff for utility function 3, described in the Details section.
 #'
-#' @details A large number of  trials are simulated to characterize the operating characteristics of the KEYBOARD design under the prespecified true toxicity probabilities and true efficacy probabilities of the investigational doses. Dose assignment rule follows the rule described in the function \code{get.decision.obd.kb()}.
+#' @details A large number of  trials are simulated to characterize the operating characteristics of the Keyboard design under the prespecified true toxicity probabilities and true efficacy probabilities of the investigational doses.  The dose assignment follows the rules described in the function \code{get.decision.obd.kb()}.
 #'
-#' There are stopping rules the KEYBOARD design:
+#' The following stopping rules are built in the Keyboard design:
 #' \enumerate{
-#' \item stop the trial if the lowest dose is eliminated from the trial due to high unacceptable toxicity.
-#' \item stop the trial if the number of patients treated at current dose is larger than or equal to \code{n.earlystop}.
+#' \item Stop the trial if the lowest dose is eliminated from the trial due to high unacceptable toxicity.
+#' \item Stop the trial if the number of patients treated at current dose is larger than or equal to \code{n.earlystop}.
 #' }
 #'
-#' @return \code{get.oc.obd2.kb()} returns the operating characteristics of the KEYBOARD design as a list, including:\cr
+#' @return \code{get.oc.obd2.kb()} returns the operating characteristics of the Keyboard design as a list, including:\cr
 #' \enumerate{
-#'    \item selection percentage at each dose level using utility function 1 (\code{$selpercent1}), \cr
-#'    \item selection percentage at each dose level using utility function 2 (\code{$selpercent2}), \cr
-#'    \item selection percentage at each dose level using utility function 3 (\code{$selpercent3}), \cr
+#'    \item the selection percentage at each dose level using utility function 1 (\code{$selpercent1}), \cr
+#'    \item the selection percentage at each dose level using utility function 2 (\code{$selpercent2}), \cr
+#'    \item the selection percentage at each dose level using utility function 3 (\code{$selpercent3}), \cr
 #'    \item the number of patients treated at each dose level (\code{$npatients}), \cr
-#'    \item the number of dose limiting toxicities (DLTs) observed at each dose level (\code{$ntox}), \cr
-#'    \item the number of responders observed at each dose level (\code{$neff}), \cr
+#'    \item the number of dose-limiting toxicities (DLTs) observed at each dose level (\code{$ntox}), \cr
+#'    \item the number of responses observed at each dose level (\code{$neff}), \cr
 #'    \item the average number of DLTs (\code{$totaltox}), \cr
-#'    \item the average number of responders (\code{$totaleff}), \cr
+#'    \item the average number of responses (\code{$totaleff}), \cr
 #'    \item the average number of patients (\code{$totaln}), \cr
 #'    \item the percentage of early stopping without selecting the OBD using utility function 1 (\code{$percentstop1}), \cr
 #'    \item the percentage of early stopping without selecting the OBD using utility function 2 (\code{$percentstop2}), \cr
@@ -58,7 +55,7 @@
 #'
 #' }
 #'
-#'
+#' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
 #' target.toxicity <- 0.30
 #' target.efficacy <- 0.40
@@ -80,18 +77,18 @@
 #' @family single-agent phase I/II functions
 #'
 #' @references
-#' Daniel H. Li, James B. Whitmore, Wentian Guo and Yuan Ji  Toxicity and Efficacy Probability Interval Design for Phase I Adoptive Cell Therapy Dose-Finding Clinical Trials
+#' Li DH, Whitmore JB, Guo W, Ji Y.  Toxicity and efficacy probability interval design for phase I adoptive cell therapy dose-finding clinical trials.
 #' \emph{Clinical Cancer Research}. 2017; 23:13-20.
 #'https://clincancerres.aacrjournals.org/content/23/1/13.long
 #'
-#' Suyu Liu, Valen E. Johnson. A robust Bayesian dose-finding design for phase I/II clinical trials
-#' \emph{Biostatistics}. 2016; 17:249-263.
+#' 
+#' Liu S, Johnson VE.  A robust Bayesian dose-finding design for phase I/II clinical trials. \emph{Biostatistics}. 2016; 17(2):249-63.
 #' https://academic.oup.com/biostatistics/article/17/2/249/1744018
 #'
-#' Yanhong Zhou, J. Jack Lee, Ying Yuan. A utility-based Bayesian optimal interval (U-BOIN) phase I/II design to identify the optimal biological dose for targeted and immune therapies
-#' \emph{Statistics in Medicine}. 2019; 38:S5299-5316.
+#' Zhou Y, Lee JJ, Yuan Y.  A utility-based Bayesian optimal interval (U-BOIN) phase I/II design to identify the optimal biological dose for targeted and immune therapies. \emph{Statistics in Medicine}. 2019; 38:S5299-5316.
 #' https://onlinelibrary.wiley.com/doi/epdf/10.1002/sim.8361
 #'
+#' @export
 get.oc.obd2.kb <- function( target.toxicity, target.efficacy,ncohort=10, cohortsize=3, n.early=100,
                            startdose=1, p.true, q.true, ntrial = 1000, seed = 6, p1=0.15, p2=0.40, q1=0.3, q2=0.6,cutoff.eli.toxicity= 0.95,
                            cutoff.eli.efficacy=0.3, w1.toxicity =0.33, w2.toxicity=1.09, indicator =  target.toxicity){
@@ -121,7 +118,7 @@ get.oc.obd2.kb <- function( target.toxicity, target.efficacy,ncohort=10, cohorts
     # get decision table
     decision.matrix.output <- get.decision.obd2.kb(target.toxicity=target.toxicity, target.efficacy=target.efficacy, cohortsize=cohortsize, ncohort=ncohort)$decision.matrix
 
-    # this function outputs the decision given the dose-finding table, the number of total patients, the number of patients experiencing toxicity and the number of responders
+    # this function outputs the decision given the dose-finding table, the number of total patients, the number of patients who experienced toxicity and the number of responses
     decision.finding <- function(out.matrix, n, t, r){
         rowindex <- which(out.matrix$N==n & out.matrix$T==t & out.matrix$R == r)
         decision <- out.matrix$Decision[rowindex]
@@ -132,9 +129,9 @@ get.oc.obd2.kb <- function( target.toxicity, target.efficacy,ncohort=10, cohorts
 
     # simulation trials
     for (trial in 1:ntrial){
-        # the number of patients experiencing toxity at each level
+        # the number of patients who experienced toxity at each level
         y <- rep(0, ndose);
-        # the number of patients experiencing reponse at each level
+        # the number of patients who experienced reponse at each level
         e <- rep(0, ndose);
         # the number of total patients treated at each level
         n <- rep(0, ndose);

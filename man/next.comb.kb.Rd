@@ -18,62 +18,58 @@ next.comb.kb(
 )
 }
 \arguments{
-\item{target}{the target dose-limiting toxicity (DLT) rate.}
+\item{target}{The target dose-limiting toxicity (DLT) rate.}
 
-\item{npts}{a \code{J*K} matrix \code{(J<=K)} containing the number of
+\item{npts}{A \code{J*K} matrix \code{(J<=K)} containing the number of
 patients treated at each dose combination.}
 
-\item{ntox}{a \code{J*K} matrix \code{(J<=K)} containing the number of
+\item{ntox}{A \code{J*K} matrix \code{(J<=K)} containing the number of
 patients who experienced a dose-limiting toxicity at each dose
 combination.}
 
-\item{dose.curr}{the current dose combination.}
+\item{dose.curr}{The current dose combination, i.e., the dose combination that was used to treat the most recently enrolled cohort of patients.}
 
-\item{n.earlystop}{the early stopping parameter. If the number of patients
-treated at the current dose reaches \code{n.earlystop},
+\item{n.earlystop}{The early stopping parameter. If the number of patients
+treated at the current dose reaches \code{n.earlystop}, then we 
 stop the trial and select the MTD based on the observed
 data.\cr
-The default value, 100, essentially turns off this type
-of early stopping.}
+The default value is 100.}
 
-\item{marginL}{the difference between the target and the left bound of the
+\item{marginL}{The difference between the target and the lower limit of the
 "target key" (proper dosing interval) to be defined.\cr
 The default is 0.05.}
 
-\item{marginR}{the difference between the target and the right bound of the
+\item{marginR}{The difference between the target and the upper limit of the
 "target key" (proper dosing interval) to be defined.\cr
 The default is 0.05.}
 
-\item{cutoff.eli}{the cutoff to eliminate an overly toxic dose and all
+\item{cutoff.eli}{The cutoff value to eliminate an overly toxic dose and all
 higher doses for safety.\cr
-The recommended value for general use and default is 0.95.}
+The default value is 0.95.}
 
-\item{extrasafe}{set \code{extrasafe=TRUE} to impose a more stringent
+\item{extrasafe}{Set \code{extrasafe=TRUE} to impose a stricter
 stopping rule.\cr
 The default is FALSE.}
 
-\item{offset}{a small positive number (between 0 and 0.5) to control how
+\item{offset}{A small positive number (between 0 and 0.5) to control how
 strict the stopping rule is when \code{extrasafe=TRUE}. A
 larger value leads to a stricter stopping rule.\cr
-The default value of 0.05 generally works well.}
+The default value is 0.05.}
 }
 \value{
 This function returns the recommended dose for treating the next
   cohort of patients (\code{$next_dc}).
 }
 \description{
-Determines the dose combination for the next cohort of patients in
-drug-combination trials that aim to find one MTD.
+This function determines the dose combination for the next cohort of patients in
+drug-combination trials.
 }
 \details{
 Given the observed data thus far, this function determines the dose
 combination for treating the next cohort of new patients. The observed data
-are: the number of patients treated at each dose combination (\code{npts}),
-even if some doses have not been trialed and therefore those numbers are
-zero; the number of patients who experienced dose-limiting toxicities (DLTs)
-at each dose combination (\code{ntox}), even if some doses have not been
-trialed and therefore those numbers are zero; and the level of the current
-dose (\code{dose.curr}).
+are as follows: the number of patients treated at each dose combination (\code{npts}), the number of patients who experienced dose-limiting toxicities (DLTs)
+at each dose combination (\code{ntox}) and the level of the current
+dose (\code{dose.curr}). The number of patients for doses that have not been used in the trial is zero.
 }
 \section{Uses}{
 
@@ -95,12 +91,13 @@ summary.kb(nxt.comb)
 
 }
 \references{
-1. Yan F, Mandrekar SJ, Yuan Y. KEYBOARD: A Novel Bayesian Toxicity Probability
+Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability
 Interval Design for Phase I Clinical Trials.
 \emph{Clinical Cancer Research}. 2017; 23:3994-4003.
 http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
-2. Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials
-\emph{Contemporary Clinical Trials}. 2020
+
+Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials.
+\emph{Contemporary Clinical Trials}. 2020.
 https://doi.org/10.1016/j.cct.2020.105972
 }
 \seealso{
@@ -108,5 +105,8 @@ Other drug-combination functions:
 \code{\link{get.boundary.comb.kb}()},
 \code{\link{get.oc.comb.kb}()},
 \code{\link{select.mtd.comb.kb}()}
+}
+\author{
+Hongying Sun, Li Tang, and Haitao Pan
 }
 \concept{drug-combination functions}

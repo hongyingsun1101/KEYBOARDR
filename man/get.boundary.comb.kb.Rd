@@ -2,7 +2,7 @@
 % Please edit documentation in R/get.boundary.comb.kb.R
 \name{get.boundary.comb.kb}
 \alias{get.boundary.comb.kb}
-\title{Dose Escalation and De-escalation Boundaries for Drug-combination Trials}
+\title{Dose Escalation or De-escalation Boundaries for Drug-combination Trials}
 \usage{
 get.boundary.comb.kb(
   target,
@@ -23,68 +23,76 @@ get.boundary.comb.kb(
 
 \item{cohortsize}{The number of patients in the cohort.}
 
-\item{marginL}{The difference between the target and the left bound of the
+\item{n.earlystop}{The early stopping parameter. If the number of patients treated at
+the current dose reaches \code{n.earlystop}, then stop the trial
+and select the MTD based on the observed data. The default
+value is 100.}
+
+\item{marginL}{The difference between the target and the lower bound of the
 "target key" (proper dosing interval) to be defined.\cr
 The default is 0.05.}
 
-\item{marginR}{The difference between the target and the right bound of the
+\item{marginR}{The difference between the target and the upper bound of the
 "target key" (proper dosing interval) to be defined.\cr
 The default is 0.05.}
 
 \item{cutoff.eli}{The cutoff to eliminate an overly toxic dose and all
 higher doses for safety.\cr
-The recommended value for general use and default is 0.95.}
+The recommended value is 0.95.}
+
+\item{offset}{A small positive number (between 0 and 0.5) to control how strict
+the stopping rule is when \code{extrasafe=TRUE}. A larger value leads
+to a stricter stopping rule. The default value is 0.05.}
+
+\item{extrasafe}{Set \code{extrasafe=TRUE} to impose a stricter stopping rule for extra safety, expressed as the stopping boundary value in the result.}
 }
 \value{
-The function returns a matrix, which includes the dose escalation
-  and de-escalation boundaries, as well as the elimination boundary.
+The function returns a matrix, including the dose escalation, de-escalation, and elimination boundaries.
 }
 \description{
-Generates the optimal dose escalation and de-escalation boundaries for
-conducting a drug-combination trial with the KEYBOARD design.
+This function generates the optimal dose escalation or de-escalation boundaries when
+conducting a drug-combination trial with the Keyboard design.
 }
 \details{
-The KEYBOARD design relies on the posterior distribution of the toxicity
-probability to guide dosage. To make the decision of dose escalation and
-de-escalation, given the observed data at the current dose, we identify the
-interval that has the highest posterior probability, which we refer to as
+The Keyboard design relies on the posterior distribution of the toxicity
+probability to guide dosage. To determine whether to escalate or de-escalate the dose, given the observed data at the current dose, we first identify an
+interval that has the highest posterior probability, referred to as
 the "strongest key". This key represents where the true dose-limiting
 toxicity (DLT) rate of the current dose is most likely located. If the
-strongest key is located on the left side of the "target key", we escalate
-the dose (because it means that the observed data suggests that the current
-dose is most likely to represent under-dosing); if the strongest key is
-located on the right side of the target key, we de-escalate the dose
-(because the data suggests that the current dose represents overdosing); and
-if the strongest key is the target key, we retain the current dose (because
-the observed data supports that the current dose is most likely to be in the
-proper dosing interval).
+strongest key is to the left of the "target key", then we escalate
+the dose because the data suggest that the current
+dose is likely to underdose patients; if the strongest key is
+to the right of the target key, then we de-escalate the dose
+because the observed data suggest that the current dose is likely to overdose the patients; and
+if the strongest key is the target key, then we retain the current dose because
+the observed data support that the current dose is most likely to be in the
+proper dosing interval.
 Graphically, the strongest key is the one with the largest area under the
 posterior distribution curve of the DLT rate of the current dose.
 
-\figure{keyboard.jpg}
+\figure{Keyboard.jpg}
 
-An attractive feature of the KEYBOARD design is that its dose escalation and
-de-escalation rule can be tabulated before the onset of the trial. Thus,
+An attractive feature of the Keyboard design is that its dose escalation and
+de-escalation rules can be tabulated before the onset of the trial. Thus,
 when conducting the trial, no calculation or model fitting is needed, and we
-only need to count the number of DLTs observed at the current dose and make
-the decision of dose escalation and de-escalation based on the pre-tabulated
+need to count only the number of DLTs observed at the current dose; 
+the decision to escalate or de-escalate the dose is based on the pre-tabulated
 decision rules.
 
-Given all observed data, we use matrix isotonic regression to obtain the
+Given all observed data, we use matrix isotonic regression to obtain an
 estimate of the toxicity rate of the combination of dose level j of drug A
-and dose level k of drug B, and select the MTD as the combination with the
+and dose level k of drug B and  to  select as the MTD  the combination with the
 toxicity estimate that is closest to the target. When there are ties, we
 randomly choose one as the MTD.
 
 For patient safety, we apply the following Bayesian overdose control rule
 after each cohort:
 if at least 3 patients have been treated at the given dose and
-the observed data indicate that the probability of the toxicity rate of
-the current combination dose being above the target toxicity rate is more
-than 95%, we eliminate that and higher doses from the trial to prevent
+the observed data indicate that the probability of the current combination dose's toxicity rate being above the target toxicity rate is more
+than 95\%,  then we exclude this dose and beyond to avoid 
 exposing future patients to these overly toxic doses. The probability
 threshold can be specified with \code{cutoff.eli}. If the lowest dose
-combination (1, 1) is overly toxic, the trial terminates early and no dose
+combination (1, 1) is overly toxic, then the trial terminates early, and no dose
 is selected as the MTD.
 }
 \note{
@@ -101,12 +109,14 @@ print(bound)
 
 }
 \references{
-1. Yan F, Mandrekar SJ, Yuan Y. KEYBOARD: A Novel Bayesian Toxicity Probability
+Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability
 Interval Design for Phase I Clinical Trials.
 \emph{Clinical Cancer Research}. 2017; 23:3994-4003.
 http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
-2. Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials
-\emph{Contemporary Clinical Trials}. 2020
+
+
+Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials.
+\emph{Contemporary Clinical Trials}. 2020.
 https://doi.org/10.1016/j.cct.2020.105972
 }
 \seealso{

@@ -1,48 +1,47 @@
 #' Operating Characteristics for Drug-combination Trials
 #'
-#' Generates the operating characteristics of the KEYBOARD design for
+#' This function generates the operating characteristics of the Keyboard design for
 #' drug-combination trials.
 #'
 
-#' @param target the target dose-limiting toxicity (DLT) rate.
-#' @param p.true a \code{J*K} matrix \code{(J<=K)} containing the true toxicity
+#' @param target The target dose-limiting toxicity (DLT) rate.
+#' @param p.true A \code{J*K} matrix \code{(J<=K)} containing the true toxicity
 #'               probabilities of combinations with \code{J} dose levels of
 #'               agent A and \code{K} dose levels of agent B.
-#' @param ncohort a scalar specifying the total number of cohorts in the trial.
-#' @param cohortsize the number of patients in the cohort.
-#' @param n.earlystop the early stopping parameter. If the number of patients
+#' @param ncohort A scalar specifying the total number of cohorts in the trial.
+#' @param cohortsize The number of patients in the cohort.
+#' @param n.earlystop The early stopping parameter. If the number of patients
 #'                    treated at the current dose reaches \code{n.earlystop},
-#'                    stop the trial and select the MTD based on the observed
+#'                    then we stop the trial and select the MTD based on the observed
 #'                    data.\cr
-#'                    The default value, 100, essentially turns off this type
-#'                    of early stopping.
-#' @param marginL the difference between the target and the left bound of the
+#'                    The default value is 100.
+#' @param marginL The difference between the target and the lower bound of the
 #'                "target key" (proper dosing interval) to be defined.\cr
 #'                The default is 0.05.
-#' @param marginR the difference between the target and the right bound of the
+#' @param marginR The difference between the target and the upper bound of the
 #'                "target key" (proper dosing interval) to be defined.\cr
 #'                The default is 0.05.
-#' @param startdose the starting dose combination level for the
+#' @param startdose The starting dose combination level for the
 #'                  drug-combination trial.\cr
 #'                  The default is c(1, 1).
-#' @param cutoff.eli the cutoff to eliminate an overly toxic dose and all
+#' @param cutoff.eli The cutoff value to eliminate an overly toxic dose and all
 #'                   higher doses for safety.\cr
-#'                   The recommended value for general use and default is 0.95.
-#' @param extrasafe set \code{extrasafe=TRUE} to impose a more stringent
+#'                   The default value is 0.95.
+#' @param extrasafe Set \code{extrasafe=TRUE} to impose a stricter
 #'                  stopping rule.\cr
 #'                  The default is FALSE.
-#' @param offset a small positive number (between 0 and 0.5) to control how
+#' @param offset A small positive number (between 0 and 0.5) to control how
 #'               strict the stopping rule is when \code{extrasafe=TRUE}. A
 #'               larger value leads to a stricter stopping rule.\cr
-#'               The default value of 0.05 generally works well.
-#' @param ntrial the total number of trials to be simulated. \cr
+#'               The default value is 0.05.
+#' @param ntrial The total number of trials to be simulated. \cr
 #'               The default value is 1000.
 #'
-#' @return The function returns the operating characteristics of the KEYBOARD
-#'   combination design as a list, among of which are: \cr
+#' @return The function returns the operating characteristics of the Keyboard
+#'   combination design as a list: \cr
 #'  \enumerate{
-#'   \item true toxicity probability at each dose level (\code{$p.true}),\cr
-#'   \item selection percentage at each dose level (\code{$selpercent}),\cr
+#'   \item the true toxicity probability at each dose level (\code{$p.true}),\cr
+#'   \item the selection percentage at each dose level (\code{$selpercent}),\cr
 #'   \item the percentage of correct selection (\code{$pcs}),\cr
 #'   \item the number of patients treated at each dose level (\code{$nptsdose}),\cr
 #'   \item the number of toxicities observed at each dose level (\code{$ntoxdose}),\cr
@@ -50,7 +49,7 @@
 #'   \item the total number of patients in the trial (\code{$totaln}),\cr
 #'   \item the total percentage of patients treated at the MTD (\code{$npercent}).
 #' }
-#'
+#' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
 #' ### Drug-combination trial ###
 #'
@@ -58,13 +57,9 @@
 #'                    0.03, 0.05, 0.15, 0.30, 0.60,
 #'                    0.08, 0.10, 0.30, 0.60, 0.75), byrow=TRUE, ncol=5)
 #'
-#' oc.comb <- get.oc.comb.kb(target=0.3, p.true, ncohort=20, cohortsize=3,
+#' oc.comb <- get.oc.comb.kb(target=0.3, p.true=p.true, ncohort=20, cohortsize=3,
 #'                           n.earlystop=12, startdose=c(1, 1), ntrial=100)
 #'
-#' summary.kb(oc.comb)
-#'
-#' plot.kb(oc.comb$ntoxdose) # can plot either $selpercent, $nptsdose,
-#'                           # or $ntoxdose.
 #'
 #' @section Uses:
 #' This function uses \code{\link{get.boundary.comb.kb}} and
@@ -74,15 +69,17 @@
 #'
 #' @references
 #'
-#' 1. Yan F, Mandrekar SJ, Yuan Y. KEYBOARD: A Novel Bayesian Toxicity Probability
+#' Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability
 #' Interval Design for Phase I Clinical Trials.
 #' \emph{Clinical Cancer Research}. 2017; 23:3994-4003.
 #' http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
-#' 2. Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials
-#' \emph{Contemporary Clinical Trials}. 2020
+#' 
+#' 
+#' Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials.
+#' \emph{Contemporary Clinical Trials}. 2020.
 #' https://doi.org/10.1016/j.cct.2020.105972
-#'
-#'
+#' @import BOIN
+#' @export
 get.oc.comb.kb <- function(target, p.true, ncohort, cohortsize,
                            n.earlystop = 100, marginL = 0.05, marginR = 0.05,
                            startdose = c(1, 1), cutoff.eli = 0.95,

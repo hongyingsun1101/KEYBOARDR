@@ -14,27 +14,27 @@ select.mtd.comb.kb(
 )
 }
 \arguments{
-\item{target}{the target dose-limiting toxicity (DLT) rate.}
+\item{target}{The target dose-limiting toxicity (DLT) rate.}
 
-\item{npts}{a \code{J*K} matrix \code{(J<=K)} containing the number of
+\item{npts}{A \code{J*K} matrix \code{(J<=K)} containing the number of
 patients treated at each dose combination.}
 
-\item{ntox}{a \code{J*K} matrix \code{(J<=K)} containing the number of
+\item{ntox}{A \code{J*K} matrix \code{(J<=K)} containing the number of
 patients who experienced a dose-limiting toxicity at each dose
 combination.}
 
-\item{cutoff.eli}{the cutoff to eliminate an overly toxic dose and all
+\item{cutoff.eli}{The cutoff value to eliminate an overly toxic dose and all
 higher doses for safety.\cr
-The recommended value for general use and default is 0.95.}
+The default value is 0.95.}
 
-\item{extrasafe}{set \code{extrasafe=TRUE} to impose a more stringent
+\item{extrasafe}{Set \code{extrasafe=TRUE} to impose a stricter
 stopping rule.\cr
 The default is FALSE.}
 
-\item{offset}{a small positive number (between 0 and 0.5) to control how
+\item{offset}{A small positive number (between 0 and 0.5) to control how
 strict the stopping rule is when \code{extrasafe=TRUE}. A
 larger value leads to a stricter stopping rule.\cr
-The default value of 0.05 generally works well.}
+The default value is 0.05.}
 }
 \value{
 The function returns a list with: \cr
@@ -46,15 +46,15 @@ The function returns a list with: \cr
 }
 }
 \description{
-Selects the maximum tolerated dose (MTD) after the drug-combination trial is
+This function selects the maximum tolerated dose (MTD) after the drug-combination trial is
 completed.
 }
 \details{
-The KEYBOARD design starts by specifying a target toxicity interval
-(referred to as the "target key"), such that any dose with a toxicity
+The Keyboard design starts by specifying a target toxicity interval
+(referred to as the "target key") such that any dose with a toxicity
 probability within that interval can be practically viewed as the MTD.
-Based on this interval's width, the KEYBOARD design forms a series of
-equally wide keys that span the rest of range from 0 to 1.
+Based on this interval's width, the Keyboard design forms a series of
+equally wide keys that span the rest of the range from 0 to 1.
 
 Given all the observed data once the trial is completed, this function
 selects the MTD based on matrix isotonic estimates of the toxicity
@@ -66,31 +66,31 @@ These (matrix) isotonic estimates are obtained with
 For patient safety, the following dose elimination rule is evaluated after
 each cohort:
 if at least 3 patients have been treated at the given dose and the
-observed data indicate that there is more than 95% chance that the current
-dose is above the MTD, we eliminate that and higher doses from the trial to
+observed data indicate that there is more than a 95\% chance that the current
+dose is above the MTD, then we eliminate this dose and beyond from the trial to
 prevent exposing future patients to these overly toxic doses. The
 probability threshold for elimination can be specified with
 \code{cutoff.eli}. When a dose is eliminated, the design recommends the next
 lower dose for treating the next patient. If the lowest dose combination
-(1, 1) is overly toxic, the trial terminates early and no dose is selected
+(1, 1) is overly toxic, then the trial terminates early and no dose is selected
 as the MTD.
 
 For some applications, investigators may prefer a stricter stopping rule
 for extra safety when the lowest dose is overly toxic. This can be achieved
-by setting \code{extrasafe=TRUE}, which imposes the following, stricter,
+by setting \code{extrasafe=TRUE}, which imposes the following stricter
 safety stopping rule:\cr
 Stop the trial if \cr
 (i) the number of patients treated at the lowest dose \eqn{\ge 3}, and \cr
-(ii) \deqn{Pr((toxicity rate of the lowest dose > target) | data)
+(ii) \deqn{Pr[(toxicity rate of the lowest dose > target) | data)]
            > cutoff.eli - offset}
 As a tradeoff, the strong stopping rule will decrease the MTD selection
-percentage when the lowest dose actually is the MTD.
+percentage when the lowest dose is the true MTD.
 }
 \note{
-The MTD selection and dose escalation/de-escalation rule are two
+The MTD selection and dose escalation/de-escalation rules are two
   independent components of the trial design. When appropriate, another dose
-  selection procedure (e.g., based on a fitted logistic model) can be used
-  to select the MTD after completing the trial using the KEYBOARD design.
+  selection procedure (e.g., one based on a fitted logistic model) can be used
+  to select the MTD after completing the trial using the Keyboard design.
 }
 \section{Uses}{
 
@@ -117,12 +117,13 @@ plot.kb(sel.comb)
 \references{
 
 
-1. Yan F, Mandrekar SJ, Yuan Y. KEYBOARD: A Novel Bayesian Toxicity Probability
+Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability
 Interval Design for Phase I Clinical Trials.
 \emph{Clinical Cancer Research}. 2017; 23:3994-4003.
 http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
-2. Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials
-\emph{Contemporary Clinical Trials}. 2020
+
+Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials.
+\emph{Contemporary Clinical Trials}. 2020.
 https://doi.org/10.1016/j.cct.2020.105972
 }
 \seealso{
@@ -130,5 +131,8 @@ Other drug-combination functions:
 \code{\link{get.boundary.comb.kb}()},
 \code{\link{get.oc.comb.kb}()},
 \code{\link{next.comb.kb}()}
+}
+\author{
+Hongying Sun, Li Tang, and Haitao Pan
 }
 \concept{drug-combination functions}

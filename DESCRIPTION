@@ -1,12 +1,15 @@
-Package: KEYBOARD
+Package: Keyboard
 Type: Package
-Title: A Bayesian Interval Design for Early Phase Clinical Trials
+Title: Bayesian Designs for Early Phase Clinical Trials
 Version: 0.1.0
-Author: Hongying Sun, Li Tang, Cheng Cheng, and Haitao Pan
-Maintainer: Haitao Pan <haitao.pan@stjude.org>
-Description: This is an R package KEYBOARD, which implements a recently developed methodology for designing single-agent, drug-combination and phase I/II dose-finding clinical. The KEYBOARD designs are novel phase I trial designs that can be implemented simply and transparently, similar to the 3+3 design, but yield excellent performance comparable to those of more complicated, model-based designs. The KEYBOAD package provides tools for designing, conducting, and analyzing single-agent, drug-combination, and phase I/II dose-finding clinical trials.  
-Depends: R (>= 3.4.0), Rcpp (>= 0.12.0), methods
+Author: Hongying Sun, Li Tang, and Haitao Pan
+Maintainer: Hongying Sun <hongying.sun@stjude.org>
+Imports: Iso
+Suggests: epade
+Description: This R package, Keyboard, implements a recently developed methodology for designing single-agent, drug-combination, or phase I/II dose-finding clinical trials. The Keyboard designs are novel early phase trial designs that can be implemented simply and transparently, similar to the 3+3 design, but yield excellent performance, comparable to those of more-complicated, model-based designs. The Keyboard package provides tools for designing, conducting, and analyzing single-agent, drug-combination, and phase I/II dose-finding clinical trials.  
+Depends: R (>= 3.4.0), Rcpp (>= 0.12.0), methods, BOIN
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
+Repository: CRAN

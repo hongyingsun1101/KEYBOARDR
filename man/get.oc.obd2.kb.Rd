@@ -2,7 +2,7 @@
 % Please edit documentation in R/get.oc.obd2.kb.R
 \name{get.oc.obd2.kb}
 \alias{get.oc.obd2.kb}
-\title{Generate Operating Characteristics for OBD Finding}
+\title{Generate Operating Characteristics for OBD Finding Automaticallly}
 \usage{
 get.oc.obd2.kb(
   target.toxicity,
@@ -27,63 +27,61 @@ get.oc.obd2.kb(
 )
 }
 \arguments{
-\item{target.toxicity}{the target toxicity rate}
+\item{target.toxicity}{The target DLT rate.}
 
-\item{target.efficacy}{the target efficacy rate}
+\item{target.efficacy}{The target efficacy rate.}
 
-\item{ncohort}{the total number of cohorts}
+\item{ncohort}{The total number of cohorts.}
 
-\item{cohortsize}{the cohortsize}
+\item{cohortsize}{The number of patients in the cohort.}
 
-\item{n.early}{the early stopping parameter. If the number of patients treated at
-the current dose reaches \code{n.early}, stop the trial
-and select the optimal biological dose (OBD) based on the observed data. The default
-value \code{n.early=100} essentially turns off the type
-of early stopping.}
+\item{n.early}{The early stopping parameter. If the number of patients treated at
+the current dose reaches \code{n.early}, then we stop the trial
+and select the optimal biological dose (OBD) based on the observed data. The default value is 100.}
 
-\item{startdose}{the starting dose level}
+\item{startdose}{The starting dose level.}
 
-\item{p.true}{a vector containing the true toxicity probabilities of the
+\item{p.true}{A vector containing the true toxicity probabilities of the
 investigational dose levels.}
 
-\item{q.true}{a vector containing the true efficacy  probabilities of the
+\item{q.true}{A vector containing the true efficacy  probabilities of the
 investigational dose levels.}
 
-\item{ntrial}{the total number of trials to be simulated}
+\item{ntrial}{The total number of trials to be simulated.}
 
-\item{seed}{the random seed for simulation}
+\item{seed}{The random seed for simulation.}
 
-\item{p1}{the cutoff lower limit for safety utility function 1, described in the Details section.}
+\item{p1}{The cutoff lower limit for safety utility function 1, described in the Details section.}
 
-\item{p2}{the cutoff upper limit for safety utility function 1, described in the Details section.}
+\item{p2}{The cutoff upper limit for safety utility function 1, described in the Details section.}
 
-\item{q1}{the cutoff lower limit for efficacy utility function 1, described in the Details section.}
+\item{q1}{The cutoff lower limit for efficacy utility function 1, described in the Details section.}
 
-\item{q2}{the cutoff upper limit for efficacy utility function 1, described in the Details section.}
+\item{q2}{The cutoff upper limit for efficacy utility function 1, described in the Details section.}
 
-\item{cutoff.eli.toxicity}{the cutoff to eliminate a dose with unacceptable high toxicity for safety.
-The recommended value is (\code{cutoff.eli.toxicity=0.95}).}
+\item{cutoff.eli.toxicity}{The cutoff to eliminate a dose with unacceptable high toxicity for safety.
+The recommended value is 0.95.}
 
-\item{cutoff.eli.efficacy}{the cutoff for the futility rule, the acceptable lowest efficacy.
-The recommended value is  (\code{cutoff.eli.toxicity=0.3})}
+\item{cutoff.eli.efficacy}{The cutoff for the futility rule, the acceptable lowest efficacy.
+The recommended value is 0.30.}
 
-\item{w1.toxicity}{the weight for toxicity utility function 2 and 3, described in the Details section.}
+\item{w1.toxicity}{The weight for toxicity utility function 2 and 3, described in the Details section.}
 
-\item{w2.toxicity}{the weight for toxicity utility function 3, described in the Details section.}
+\item{w2.toxicity}{The weight for toxicity utility function 3, described in the Details section.}
 
-\item{indicator}{the indicator cutoff for utility function 3, described in the Details section.}
+\item{indicator}{The indicator cutoff for utility function 3, described in the Details section.}
 }
 \value{
-\code{get.oc.obd2.kb()} returns the operating characteristics of the KEYBOARD design as a list, including:\cr
+\code{get.oc.obd2.kb()} returns the operating characteristics of the Keyboard design as a list, including:\cr
 \enumerate{
-   \item selection percentage at each dose level using utility function 1 (\code{$selpercent1}), \cr
-   \item selection percentage at each dose level using utility function 2 (\code{$selpercent2}), \cr
-   \item selection percentage at each dose level using utility function 3 (\code{$selpercent3}), \cr
+   \item the selection percentage at each dose level using utility function 1 (\code{$selpercent1}), \cr
+   \item the selection percentage at each dose level using utility function 2 (\code{$selpercent2}), \cr
+   \item the selection percentage at each dose level using utility function 3 (\code{$selpercent3}), \cr
    \item the number of patients treated at each dose level (\code{$npatients}), \cr
-   \item the number of dose limiting toxicities (DLTs) observed at each dose level (\code{$ntox}), \cr
-   \item the number of responders observed at each dose level (\code{$neff}), \cr
+   \item the number of dose-limiting toxicities (DLTs) observed at each dose level (\code{$ntox}), \cr
+   \item the number of responses observed at each dose level (\code{$neff}), \cr
    \item the average number of DLTs (\code{$totaltox}), \cr
-   \item the average number of responders (\code{$totaleff}), \cr
+   \item the average number of responses (\code{$totaleff}), \cr
    \item the average number of patients (\code{$totaln}), \cr
    \item the percentage of early stopping without selecting the OBD using utility function 1 (\code{$percentstop1}), \cr
    \item the percentage of early stopping without selecting the OBD using utility function 2 (\code{$percentstop2}), \cr
@@ -94,15 +92,15 @@ The recommended value is  (\code{cutoff.eli.toxicity=0.3})}
 }
 }
 \description{
-Report operating characteristics for optimal biological dose (OBD) finding
+This function reports operating characteristics for optimal biological dose (OBD) finding automatically.
 }
 \details{
-A large number of  trials are simulated to characterize the operating characteristics of the KEYBOARD design under the prespecified true toxicity probabilities and true efficacy probabilities of the investigational doses. Dose assignment rule follows the rule described in the function \code{get.decision.obd.kb()}.
+A large number of  trials are simulated to characterize the operating characteristics of the Keyboard design under the prespecified true toxicity probabilities and true efficacy probabilities of the investigational doses.  The dose assignment follows the rules described in the function \code{get.decision.obd.kb()}.
 
-There are stopping rules the KEYBOARD design:
+The following stopping rules are built in the Keyboard design:
 \enumerate{
-\item stop the trial if the lowest dose is eliminated from the trial due to high unacceptable toxicity.
-\item stop the trial if the number of patients treated at current dose is larger than or equal to \code{n.earlystop}.
+\item Stop the trial if the lowest dose is eliminated from the trial due to high unacceptable toxicity.
+\item Stop the trial if the number of patients treated at current dose is larger than or equal to \code{n.earlystop}.
 }
 }
 \examples{
@@ -125,16 +123,15 @@ plot.kb(oc.obd2.kb$neff)
 
 }
 \references{
-Daniel H. Li, James B. Whitmore, Wentian Guo and Yuan Ji  Toxicity and Efficacy Probability Interval Design for Phase I Adoptive Cell Therapy Dose-Finding Clinical Trials
+Li DH, Whitmore JB, Guo W, Ji Y.  Toxicity and efficacy probability interval design for phase I adoptive cell therapy dose-finding clinical trials.
 \emph{Clinical Cancer Research}. 2017; 23:13-20.
 https://clincancerres.aacrjournals.org/content/23/1/13.long
 
-Suyu Liu, Valen E. Johnson. A robust Bayesian dose-finding design for phase I/II clinical trials
-\emph{Biostatistics}. 2016; 17:249-263.
+
+Liu S, Johnson VE.  A robust Bayesian dose-finding design for phase I/II clinical trials. \emph{Biostatistics}. 2016; 17(2):249-63.
 https://academic.oup.com/biostatistics/article/17/2/249/1744018
 
-Yanhong Zhou, J. Jack Lee, Ying Yuan. A utility-based Bayesian optimal interval (U-BOIN) phase I/II design to identify the optimal biological dose for targeted and immune therapies
-\emph{Statistics in Medicine}. 2019; 38:S5299-5316.
+Zhou Y, Lee JJ, Yuan Y.  A utility-based Bayesian optimal interval (U-BOIN) phase I/II design to identify the optimal biological dose for targeted and immune therapies. \emph{Statistics in Medicine}. 2019; 38:S5299-5316.
 https://onlinelibrary.wiley.com/doi/epdf/10.1002/sim.8361
 }
 \seealso{
@@ -143,5 +140,8 @@ Other single-agent phase I/II functions:
 \code{\link{get.decision.obd2.kb}()},
 \code{\link{get.oc.obd.kb}()},
 \code{\link{select.obd.kb}()}
+}
+\author{
+Hongying Sun, Li Tang, and Haitao Pan
 }
 \concept{single-agent phase I/II functions}

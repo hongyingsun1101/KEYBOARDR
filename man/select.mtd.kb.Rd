@@ -14,60 +14,58 @@ select.mtd.kb(
 )
 }
 \arguments{
-\item{target}{the target dose-limiting toxicity (DLT) rate.}
+\item{target}{The target dose-limiting toxicity (DLT) rate.}
 
-\item{npts}{a vector containing the number of patients treated at each dose
-level.}
+\item{npts}{A vector containing the number of patients treated at each dose level.}
 
-\item{ntox}{a vector containing the number of patients who experienced a
-dose-limiting toxicity at each dose level.}
+\item{ntox}{A vector containing the number of patients at each dose level who experienced a DLT at each dose level.}
 
-\item{cutoff.eli}{the cutoff to eliminate an overly toxic dose and all
+\item{cutoff.eli}{The cutoff to eliminate an overly toxic dose and all
 higher doses for safety.\cr
-The recommended value for general use and default is 0.95.}
+The default value is 0.95.}
 
-\item{extrasafe}{set \code{extrasafe=TRUE} to impose a more stringent
+\item{extrasafe}{Set \code{extrasafe=TRUE} to impose a stricter
 stopping rule.\cr
 The default is FALSE.}
 
-\item{offset}{a small positive number (between 0 and 0.5) to control how
-strict the stopping rule is when \code{extrasafe=TRUE}. A
-larger value leads to a stricter stopping rule.\cr
-The default value of 0.05 generally works well.}
+\item{offset}{A small positive number (between 0 and 0.5) to control how
+ strict the stopping rule is when \code{extrasafe=TRUE}. A
+ larger value leads to a stricter stopping rule.\cr
+The default value is 0.05.}
 }
 \value{
 The function returns a list with: \cr
 \enumerate{
   \item the target toxicity probability (\code{$target}),\cr
   \item the selected MTD (\code{$MTD}),\cr
-  \item the isotonic estimates of the DLT probability at each dose and associated \code{95\%} credible interval (\code{$p_est}),\cr
+  \item the isotonic estimates of the DLT probability at each dose and corresponding \code{95\%} credible interval (\code{$p_est}),\cr
   \item the probability of overdosing defined as\cr
       \eqn{Pr(toxicity > target | data)} (\code{$p_overdose}).
 }
 }
 \description{
-Selects the maximum tolerated dose (MTD) after the single-agent trial is
+This function selects the maximum tolerated dose (MTD) after the single-agent trial is
 completed.
 }
 \details{
-The KEYBOARD design starts by specifying a target toxicity interval
-(referred to as the "target key"), such that any dose with a toxicity
+The Keyboard design starts by specifying a target toxicity interval
+(referred to as the "target key") such that any dose with a toxicity
 probability within that interval can be practically viewed as the MTD.
-Based on this interval's width, the KEYBOARD design forms a series of
+Based on this interval's width, the Keyboard design forms a series of
 equally wide keys that span the rest of range from 0 to 1.
 
 This function selects the MTD based on isotonic estimates of toxicity
 probabilities, selecting dose level \eqn{j*} for which the isotonic estimate
-of the DLT rate is closest to the target. If there are ties, we select from
+of the DLT rate is closest to the target. If there are ties, then we select from
 the ties the highest dose level when the estimate of the DLT rate is smaller
 than the target, or the lowest dose level when the estimate of the DLT rate
-is greater than the target. The isotonic estimates are obtained by the
+is greater than the target. The isotonic estimates are obtained by applying the
 pooled-adjacent-violators algorithm (PAVA) [Barlow, 1972].
 
 
 For some applications, investigators may prefer a stricter stopping rule
-for extra safety when the lowest dose is overly toxic. This can be achieved
-by setting \code{extrasafe=TRUE}, which imposes the following, stricter,
+to ensure the lowest dose is not overly toxic. This can be achieved
+by setting \code{extrasafe=TRUE}, which imposes the following stricter
 safety stopping rule:\cr
 Stop the trial if \cr
 (i) the number of patients treated at the lowest dose \eqn{\ge 3}, and \cr
@@ -77,10 +75,10 @@ As a tradeoff, the strong stopping rule will decrease the MTD selection
 percentage when the lowest dose actually is the MTD.
 }
 \note{
-The MTD selection and dose escalation/de-escalation rule are two
+The MTD selection and dose escalation/de-escalation rules are two
   independent components of the trial design. When appropriate, another dose
-  selection procedure (e.g., based on a fitted logistic model) can be used
-  to select the MTD after completing the trial using the KEYBOARD design.
+  selection procedure (e.g., one based on a fitted logistic model) can be used
+  to select the MTD after completing the trial using the Keyboard design.
 }
 \examples{
 ### Single-agent trial ###
@@ -92,12 +90,9 @@ selmtd <- select.mtd.kb(target=0.3, npts=n, ntox=y)
 
 selmtd
 
-summary.kb(selmtd)
-plot.kb(selmtd)
-
 }
 \references{
-Yan F, Mandrekar SJ, Yuan Y. KEYBOARD: A Novel Bayesian Toxicity Probability
+Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability
 Interval Design for Phase I Clinical Trials.
 \emph{Clinical Cancer Research}. 2017; 23:3994-4003.
 http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
@@ -106,5 +101,8 @@ http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
 Other single-agent functions: 
 \code{\link{get.boundary.kb}()},
 \code{\link{get.oc.kb}()}
+}
+\author{
+Hongying Sun, Li Tang, and Haitao Pan
 }
 \concept{single-agent functions}

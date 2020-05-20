@@ -1,31 +1,31 @@
 #' Automatic Boundary and Decision Tables for Phase I/II Trials.
 #' 
-#' Automatically generates boundary table and decision table for single-agent Phase I/II trials using KEYBOARD design.
+#' This function automatically generates a boundary table and a decision table for single-agent Phase I/II trials using Keyboard design.
 #'
 #' @details 
-#' The KEYBOARD design utilizes on the posterior distributions of the toxicity and efficacy to guide dosage transition. To make the decision of dose escalation or de-escalation given the observed data at the current dose, we need to generate a boundary table and decision matrix. The boundary table requires a lower boundary and an upper boundary for both toxicity and efficacy and a decision matrix, which provides dose escalation and de-escalation suggestions. 
+#' The Keyboard design utilizes the posterior distributions of the toxicity and efficacy to guide dosage transition. To determine whether to escalate or de-escalate given the observed data at the current dose, we must generate a boundary table and a decision matrix. The boundary table requires a lower boundary and an upper boundary for both toxicity and efficacy and a decision matrix, which provides dose escalation or de-escalation suggestions. 
 #' 
-#' A bayesian toxicity probability interval design from Yuan's group is used to determine the lower and upper boundaries for toxicity  based on the target toxicity rate. 
+#' A Bayesian toxicity probability interval design from Yuan's group is used to determine the lower and upper boundaries for toxicity  based on the target toxicity rate. 
 #' 
-#' The boundaries for efficacy is calculated based on the efficacy failure rate, which is \eqn{1-target.efficacy}.  Efficacy failure rate is defined as 1 - target.efficacy.  Then efficacy failure rate is treated similarly to toxicity and the lower and upper boundaries for efficacy failure is determined using a bayesian toxicity probability interval design.  In order to compute the lower and upper boundaries for efficacy, we use the following:
+#' The boundaries for efficacy are calculated based on the efficacy failure rate, which is \eqn{1-target.efficacy}.  The efficacy failure rate is defined as 1 - target.efficacy and  treated similarly to toxicity. The lower and upper boundaries for efficacy failure are determined using a Bayesian toxicity probability interval design.  To compute the lower and upper boundaries for efficacy, we use the following:
 #' \deqn{efficacy.lower.boundary = 1 - efficacy.failure.upper.boundary}
 #'  \deqn{efficacy.upper.boundary = 1 - efficacy.failure.lower.boundary}
 #'  
-#' There are 3 subintervals for toxicity, shown in the following:
+#' There are 3 subintervals for toxicity:
 #'  \enumerate{
-#' \item Low interval for toxicity is (0, toxicity.lower.boundary). 
-#' \item Moderate interval for toxicity is (toxicity.lower.boundary, toxicity.upper.boundary).
-#' \item High interval for toxicity is (toxicity.upper.boundary, 1).
+#' \item The low interval for toxicity is (0, toxicity.lower.boundary). 
+#' \item The moderate interval for toxicity is (toxicity.lower.boundary, toxicity.upper.boundary).
+#' \item The high interval for toxicity is (toxicity.upper.boundary, 1).
 #' }
-#' There are 3 subintervals for efficacy, shown in the following:
+#' There are 3 subintervals for efficacy:
 #'  \enumerate{
-#' \item Low interval for efficacy is (0, efficacy.lower.boundary). 
-#' \item Moderate interval for efficacy is (efficacy.lower.boundary, efficacy.upper.boundary).
-#' \item High interval for efficacy is (efficacy.upper.boundary, 1).
+#' \item The low interval for efficacy is (0, efficacy.lower.boundary). 
+#' \item The moderate interval for efficacy is (efficacy.lower.boundary, efficacy.upper.boundary).
+#' \item The high interval for efficacy is (efficacy.upper.boundary, 1).
 #' }
-#' Assuming the toxicity probability is \eqn{p_i} and the efficacy probability is \eqn{q_i} at dose level i, the probability unit intervals for toxicity and efficacy can be partitioned in to subintervals (a, b) and (c,d). (a, b)  is a subinterval for toxicity probability and (c, d) is a subinterval for efficacy probability. (a, b) x (c,d) is a combination interval. 3 toxicity intervals and 3 efficacy intervals result in 9 combination intervals. Besides the target toxicity rate and the target efficacy rate, a matrix is required that contains 9 decisions for these 9 combination intervals ordered as ((low toxicity, low efficacy),(low toxicity, moderate efficacy),(low toxicity, high efficacy), (moderate toxicity, low efficacy),(moderate toxicity, moderate efficacy),(moderate toxicity, high efficacy),(high toxicity, low efficacy),(high toxicity, moderate efficacy),(high toxicity, high efficacy)). Decisions include "E", "D","S". Decision "D" denotes de-escalation and the next cohort of patients will be treated at the closest lower dose level.  Decision "E" denotes escalation and  the next cohort of patients will be treated at the closest higher dose level.  Decision "S" denotes stay and the next cohort of patients will be treated at the current dose level. 
+#' Assuming that the toxicity probability is \eqn{p_i} and the efficacy probability is \eqn{q_i} at dose level i, the probability unit intervals for toxicity and efficacy can be partitioned in to subintervals (a, b) and (c,d). (a, b)  is a subinterval for toxicity probability and (c, d) is a subinterval for efficacy probability. (a, b) x (c,d) is a combination interval. 3 toxicity intervals and 3 efficacy intervals result in 9 combination intervals. Besides the target toxicity rate and the target efficacy rate, a matrix is required that contains 9 decisions for these 9 combination intervals ordered as ((low toxicity, low efficacy),(low toxicity, moderate efficacy),(low toxicity, high efficacy), (moderate toxicity, low efficacy),(moderate toxicity, moderate efficacy),(moderate toxicity, high efficacy),(high toxicity, low efficacy),(high toxicity, moderate efficacy),(high toxicity, high efficacy)).  Possible decisions are "E", "D","S". Decision "D" denotes de-escalation, so the next cohort of patients will be treated at the next lower dose level.  Decision "E" denotes escalation, so the next cohort of patients will be treated at the next higher dose level.  Decision "S" denotes stay, so the next cohort of patients will be treated at the current dose level. 
 #' 
-#' Shown here is an example of boundary tables using this method with a target toxicity rate of 0.2 and a target efficacy rate of 0.4:
+#' Shown here is an example of boundary tables designed using this method with a target toxicity rate of 0.2 and a target efficacy rate of 0.4:
 #' 
 #' \tabular{rrrrrr}{
 #'        \tab   \tab Efficacy.low \tab Efficacy.moderate \tab Efficacy.high  \cr
@@ -37,15 +37,15 @@
 #' }
 #' For example, the interval combination (0, 0.16) x (0.27,0.52) corresponds to a decision "S". This means that the next cohort of patients will be treated at the current dose level if the observed toxicity rate of current dose falls in (0, 0.16)  and the observed efficacy rate falls in (0.27,0.52) . 
 #' 
-#' Suppose that there are d doses in the trial and the current dose is i. Define the number of patients as \eqn{n_i}, the number of patients experiencing toxicity as \eqn{x_i} and the number of responders as \eqn{y_i}.  The trial data can be shown as follows:
+#' Suppose that there are d doses in the trial and that the current dose is i. Define the number of patients as \eqn{n_i}, the number of patients who experienced toxicity as \eqn{x_i} and the number of responses as \eqn{y_i}.  The trial data can be shown as follows:
 #' \deqn{D= {(n_i, x_i, y_i), i = 1, ..., d}} 
 #' 
 #' Bayesian rule is used to calculate the joint unit probability mass (JUPM) for the toxicity and efficacy combination intervals. For a given combination interval, JUPM is calculated as follows:
 #' \deqn{JUPM_{(a,b)}^{(c,d)} =Pr{p_j \in (a,b), q_j \in (c,d) | D} / (b-a)*(d-c) }
-#' \eqn{Pr{p_j \in (a,b), q_j \in (c,d) | D} } is the posterior probabilities of \eqn{p_i} and \eqn{q_i} falling in the subinterval (a,b) and (c,d).  Assume the prior for both \eqn{p_i} and \eqn{q_i} follows independent beta distributions \eqn{beta(\alpha_p,\beta_p)} and \eqn{beta(\alpha_q,\beta_q)} respectively. The posterior distributions for \eqn{p_i} and \eqn{q_i} are \eqn{beta(\alpha_p + x_i,\beta_p + n_i - x_i)} and \eqn{beta(\alpha_q + y_i,\beta_q + n_i - y_i)}. Using these posterior distributions, calculate the JUPM for all these 16 combination intervals and find the winning combination interval (a*,b*) and (c*,d*), which achieves the largest JUPM. The decision that corresponds to this winner combination interval is used to treat the next cohort of patients.
+#' \eqn{Pr{p_j \in (a,b), q_j \in (c,d) | D} } are the posterior probabilities of \eqn{p_i} and \eqn{q_i} falling in the subinterval (a,b) and (c,d).  Assume the prior for both \eqn{p_i} and \eqn{q_i} follows independent beta distributions \eqn{beta(\alpha_p,\beta_p)} and \eqn{beta(\alpha_q,\beta_q)} respectively. The posterior distributions for \eqn{p_i} and \eqn{q_i} are \eqn{beta(\alpha_p + x_i,\beta_p + n_i - x_i)} and \eqn{beta(\alpha_q + y_i,\beta_q + n_i - y_i)}. Using these posterior distributions, calculate the JUPM for all  16 combination intervals and find the winning combination interval (a*,b*) and (c*,d*), which achieves the largest JUPM. The decision that corresponds to this winning combination interval is used to treat the next cohort of patients.
 #' 
 #' 
-#' There are two dose exclusion rules applied in the trial design: safety rule and futility rule.
+#' Two dose exclusion rules are applied in the trial design: safety rule and futility rule.
 #' Safety rule:
 #' if at least 3 patients have been treated at a given dose and given 
 #' the observed data indicate that the probability of the toxicity rate of
@@ -53,39 +53,36 @@
 #' than 95\%, we eliminate the current and any higher dose from the trial to prevent
 #' exposing future patients to with unacceptable high toxicity. The probability
 #' threshold can be specified with \code{cutoff.eli.toxicity}. When a dose is
-#' eliminated, the design recommends the closest lower dose for treating the next cohort of 
-#' patients. If the lowest dose is overly toxic, the trial terminates early and
+#' eliminated, the design recommends the next lower dose for treating the next cohort of 
+#' patients. If the lowest dose is overly toxic, then the trial terminates early and
 #' no dose is selected as the OBD. This corresponds to a dose assignment of "DUT", which means de-escalation due to unacceptable high toxicity and excluding the current dose and any dose higher than this dose from the trial.
 #' 
 #' Futility rule:
-#' if at least 3 patients have been treated at a given dose and given
-#' the observed data indicate that the probability of the efficacy rate of
-#' the current dose exceeding the target efficacy rate is less than 30\%, we eliminate this dose from the trial and prevent from
+#' if at least 3 patients have been treated at a given dose and 
+#' the observed data indicate that the probability of the  current dose's efficacy rate  exceeding the target efficacy rate is less than 30\%, then we eliminate this dose from the trial  to avoid
 #' exposing future patients to these futile doses. The probability
 #' threshold can be specified with \code{cutoff.eli.efficacy}.  This corresponds to two possible dose assignments: "EUE" and "DUE", both excluding this dose from the trial. "EUE" denotes escalation due to unacceptable low efficacy and "DUE" denotes de-escalation due to unacceptable low efficacy.
 #' 
-#' An attractive feature of the KEYBOARD design is that its dose escalation and
+#' An attractive feature of the Keyboard design is that its dose escalation and
 #' de-escalation rule can be tabulated before implementing the trial. Thus,
-#' when conducting the trial, no real-time calculation or model fitting is needed any more, and one 
-#' only need to count the number of patients, the number of DLTs, and the number of responders observed at the current dose and make
-#' the decision of dose escalation or de-escalation based on the pre-tabulated
+#' when conducting the trial, no real-time calculation or model fitting is needed, and one 
+#'  needs to count only the number of patients, the number of DLTs, and the number of responses observed at the current dose and the desicion to escalate or de-escalate is  based on the pre-tabulated
 #' decision rules.
 #'
-#' @param target.toxicity  the target toxicity rate
-#' @param target.efficacy  the target efficacy rate
-#' @param cohortsize  the cohort size
-#' @param ncohort the total number of cohorts
-#' @param cutoff.eli.toxicity the cutoff to eliminate a dose with unacceptable high toxicity for safety.
-#'                            The recommended value is (\code{cutoff.eli.toxicity=0.95}).
-#' @param cutoff.eli.efficacy the cutoff to eliminate a dose with unacceptable low efficacy.
-#'                            The recommended value is (\code{cutoff.eli.toxicity=0.3})
-#' @param decision the pre-specified decision matrix for the 9 combination intervals including (low toxicity, low efficacy),(low toxicity, moderate efficacy),(low toxicity, high efficacy), (moderate toxicity, low efficacy),(moderate toxicity, moderate efficacy),(moderate toxicity, high efficacy),(high toxicity, low efficacy),(high toxicity, moderate efficacy),(high toxicity, high efficacy)
+#' @param target.toxicity  The target toxicity rate.
+#' @param target.efficacy  The target efficacy rate.
+#' @param cohortsize  The number of patients in the cohort.
+#' @param ncohort The total number of cohorts.
+#' @param cutoff.eli.toxicity The cutoff value to eliminate a dose with unacceptable high toxicity for safety. The default value is 0.95.
+#' @param cutoff.eli.efficacy The cutoff value to eliminate a dose with unacceptable low efficacy. The default value is 0.3.
+#' @param decision The pre-specified decision matrix for the 9 combination intervals: (low toxicity, low efficacy),(low toxicity, moderate efficacy),(low toxicity, high efficacy), (moderate toxicity, low efficacy),(moderate toxicity, moderate efficacy),(moderate toxicity, high efficacy),(high toxicity, low efficacy),(high toxicity, moderate efficacy),(high toxicity, high efficacy)
 #' @return \code{get.decision.obd2.kb()} returns a prespecified boundary table and a dose assignment decision table:
 #' \enumerate{
 #' \item Boundary table (\code{$boundary.table})
 #' \item Decision matrix (\code{$decision.matrix})
 #' 
 #' }
+#' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
 #' decision.obd2.kb <- get.decision.obd2.kb(target.toxicity=0.2,
 #'            target.efficacy=0.4, cohortsize=3, ncohort=10)
@@ -94,16 +91,17 @@
 #' @family single-agent phase I/II functions
 #' 
 #'
-#' @references Liu S. and Yuan, Y. (2015). Bayesian Optimal Interval Designs for Phase I
-#'             Clinical Trials, \emph{Journal of the Royal Statistical Society: Series C}, 64, 507-523.
+#' @references 
+#' Liu S. and Yuan, Y.  Bayesian Optimal Interval Designs for Phase I Clinical Trials, \emph{Journal of the Royal Statistical Society: Series C}. 2015; 64, 507-523.
 #'
-#'             Yuan Y., Hess K.R., Hilsenbeck S.G. and Gilbert M.R. (2016) Bayesian Optimal Interval Design: A
-#'        Simple and Well-performing Design for Phase I Oncology Trials, \emph{Clinical Cancer Research}, 22, 4291-4301.
+#' Yuan Y., Hess K.R., Hilsenbeck S.G. and Gilbert M.R.  Bayesian Optimal Interval Design: A Simple and Well-performing Design for Phase I Oncology Trials. \emph{Clinical Cancer Research}. 2016; 22, 4291-4301.
 #' 
-#' Daniel H. Li, James B. Whitmore, Wentian Guo and Yuan Ji  Toxicity and Efficacy Probability Interval Design for Phase I Adoptive Cell Therapy Dose-Finding Clinical Trials
+#' 
+#'  Li DH, Whitmore JB, Guo W, Ji Y.  Toxicity and efficacy probability interval design for phase I adoptive cell therapy dose-finding clinical trials.
 #' \emph{Clinical Cancer Research}. 2017; 23:13-20.
-#'https://clincancerres.aacrjournals.org/content/23/1/13.long
-
+#'https://clincancerres.aacrjournals.org/content/23/1/13.long 
+#' 
+#' @export
 get.decision.obd2.kb <- function(target.toxicity, target.efficacy, cohortsize, ncohort,cutoff.eli.toxicity= 0.95, cutoff.eli.efficacy=0.3, decision=c("E","E","S","S","S","S","D","D","D")){
   ## simple error checking
   if(target.toxicity<0.05) {cat("Error: the target toxcicity rate is too low! \n"); return();}

@@ -1,45 +1,45 @@
 #'
-#'  Select the Optimal Biological Dose (OBD) for Single Agent Phase I/II Trials
+#' Select the Optimal Biological Dose (OBD) for Single-agent Phase I/II Trials
 #'
-#' Select the optimal biological dose (OBD) at the end of single agent phase I/II trial
+#' This function selects the optimal biological dose (OBD) at the end of a single-agent phase I/II trial.
 #'
-#' @param target.toxicity the target DLT rate
-#' @param target.efficacy  the target efficacy rate
-#' @param npts the vector containing the total number of patients treated at each dose level
-#' @param ntox the vector containing the number of  toxicities  at each dose level
-#' @param neff the vector containing the number of  efficacies  at each dose level
-#' @param p1 the cutoff lower limit for safety utility function 1, described in the Details section.
-#' @param p2 the cutoff upper limit for safety utility function 1, described in the Details section.
-#' @param q1 the cutoff lower limit for efficacy utility function 1, described in the Details section.
-#' @param q2 the cutoff upper limit for efficacy utility function 1, described in the Details section.
-#' @param cutoff.eli.toxicity the cutoff to eliminate a dose with unacceptable high toxicity for safety.
-#'                            We recommend the default value of (\code{cutoff.eli.toxicity=0.95}) for general use.
-#' @param cutoff.eli.efficacy the cutoff for futility rule, the acceptable lowest efficacy.
-#'                            The recommended default value of (\code{cutoff.eli.toxicity=0.3})
-#' @param w1.toxicity the weight for toxicity utility function 2 and 3, described in the Details section.
-#' @param w2.toxicity the weight for toxicity utility function 3, described in the Details section.
-#' @param indicator the indicator cutoff for utility function 3, described in the Details section.
+#' @param target.toxicity The target dose-limiting toxicity (DLT) rate.
+#' @param target.efficacy  The target efficacy rate.
+#' @param npts The vector containing the total number of patients treated at each dose level.
+#' @param ntox The vector containing the number of subjects who experienced toxicities at each dose level.
+#' @param neff The vector containing the number of subjects who experienced efficacies at each dose level.
+#' @param p1 The cutoff lower limit for safety utility function 1, described in the Details section.
+#' @param p2 The cutoff upper limit for safety utility function 1, described in the Details section.
+#' @param q1 The cutoff lower limit for efficacy utility function 1, described in the Details section.
+#' @param q2 The cutoff upper limit for efficacy utility function 1, described in the Details section.
+#' @param cutoff.eli.toxicity The cutoff value to eliminate a dose with unacceptable high toxicity for safety.
+#'                            The default value is 0.95.
+#' @param cutoff.eli.efficacy The cutoff value for futility rule, the acceptable lowest efficacy.
+#'                            The default value is 0.3.
+#' @param w1.toxicity The weight for toxicity utility function 2 and 3, described in the Details section.
+#' @param w2.toxicity The weight for toxicity utility function 3, described in the Details section.
+#' @param indicator The indicator cutoff value for utility function 3, described in the Details section.
 #'
 #'
-#' @details \code{select.obd.kb()} selects the OBD which is the most desirable based on benefit-risk tradeoff considering both toxicity and efficacy outcomes.  A utility score is used to quantify the desirability of all admissible doses. Calculation of utility scores requires the posterior probabilities for toxicity \eqn{p_i} and efficacy \eqn{q_i}, which can be computed using \eqn{beta(\alpha_p + x_i,\beta_p + n_i - x_i)} and \eqn{beta(\alpha_q + y_i,\beta_q + n_i - y_i) } assuming that the prior for both \eqn{p_i} and \eqn{q_i} follows independent beta distributions \eqn{beta(\alpha_p,\beta_p)} and \eqn{beta(\alpha_q,\beta_q)}. There are three criteria to calculate the desirability in this function.
+#' @details \code{select.obd.kb()} selects the OBD that is the most desirable based on benefit-risk tradeoff considering both toxicity and efficacy outcomes.  A utility score is used to quantify the desirability of all admissible doses. Calculation of utility scores requires the posterior probabilities for toxicity \eqn{p_i} and efficacy \eqn{q_i}, which can be computed by using \eqn{beta(\alpha_p + x_i,\beta_p + n_i - x_i)} and \eqn{beta(\alpha_q + y_i,\beta_q + n_i - y_i) } assuming that the prior for both \eqn{p_i} and \eqn{q_i} follows independent beta distributions \eqn{beta(\alpha_p,\beta_p)} and \eqn{beta(\alpha_q,\beta_q)}. Three criteria are used to calculate the desirability in this function.
 #'
-#' The first criterion relies on a utility function for toxicity \eqn{f_1(p)}, where p denotes the toxicity rate, and a utility function for efficacy \eqn{f_2(q)}, where q denotes the efficacy rate. \eqn{f_1(p)} is 1 if \eqn{p \in [0, p1)}; \eqn{f_1(p)} is 0 if \eqn{p \in [p2, 1]}; \eqn{f_1(p)} is \eqn{1- (p-p1)/(p2-p1)} if \eqn{p \in [p1, p2)}. \eqn{f_2(p)} is 1 if \eqn{p \in (0, p1)}. Here, p1 is the cutoff lower limit and p2 is the cutoff upper limit for safety utility function 1\eqn{f_1(p)}.
+#' The first criterion relies on a utility function for toxicity \eqn{f_1(p)}, where p denotes the toxicity rate, and on a utility function for efficacy \eqn{f_2(q)}, where q denotes the efficacy rate. \eqn{f_1(p)} is 1 if \eqn{p \in [0, p1)}; \eqn{f_1(p)} is 0 if \eqn{p \in [p2, 1]}; \eqn{f_1(p)} is \eqn{1- (p-p1)/(p2-p1)} if \eqn{p \in [p1, p2)}. \eqn{f_2(p)} is 1 if \eqn{p \in (0, p1)}. Here, p1 is the cutoff lower limit and p2 is the cutoff upper limit for safety utility function 1\eqn{f_1(p)}.
 #'
-#' Similarly, \eqn{f_2(q)} is 1 if \eqn{p \in [0, q1)}; \eqn{f_2(q)} is 0 if \eqn{p \in [q2, 1]}; \eqn{f_2(q)} is \eqn{1- (p-q1)/(q2-q1)} if \eqn{p \in [q1, q2)}. \eqn{f_2(p)} is 1 if \eqn{p \in (0, q1)}. Here, q1 is the cutoff lower limit and q2 is the cutoff upper limit for safety utility function  is \eqn{f_2(q)}.
+#' Similarly, \eqn{f_2(q)} is 1 if \eqn{p \in [0, q1)}; \eqn{f_2(q)} is 0 if \eqn{p \in [q2, 1]}; \eqn{f_2(q)} is \eqn{1- (p-q1)/(q2-q1)} if \eqn{p \in [q1, q2)}. \eqn{f_2(p)} is 1 if \eqn{p \in (0, q1)}. Here, q1 is the cutoff lower limit and q2 is the cutoff upper limit for safety utility function \eqn{f_2(q)}.
 #'
-#' The utility score that quantifies benefit-risk tradeoff at current dose i is calculated as follows:
+#' The utility score that quantifies benefit-risk tradeoff at the current dose i is calculated as follows:
 #' \deqn{ U(p_i, q_i) =f_1(p) * f_2(q) }
 #'
 #'
-#' The second criterion depends on a marginal toxicity probability \eqn{\pi_{T,i} = beta(\alpha_p + x_i,\beta_p + n_i - x_i) } and a marginal efficacy probability \eqn{\pi_{E,i} = beta(\alpha_q + y_i,\beta_q + n_i - y_i) }.  Then utility score is calculated as follows:
+#' The second criterion depends on a marginal toxicity probability \eqn{\pi_{T,i} = beta(\alpha_p + x_i,\beta_p + n_i - x_i) } and a marginal efficacy probability \eqn{\pi_{E,i} = beta(\alpha_q + y_i,\beta_q + n_i - y_i) }.  Then the utility score is calculated as follows:
 #' \deqn{U_i= \pi_{E,i} - w_1*\pi_{T,i} }
 #'
 #' The third criterion also depends on a marginal toxicity probability \eqn{\pi_{T,i} = beta(\alpha_p + x_i,\beta_p + n_i - x_i) } and a marginal efficacy probability \eqn{\pi_{E,i} = beta(\alpha_q + y_i,\beta_q + n_i - y_i) }, but it has an additional penalty when the posterior toxicity probability is high by using an indicator function.  Then utility score using this function is calculated as follows:
 #'
 #' \deqn{U_j= \pi_{E,i} - w_1*\pi_{T,i}-w_2*\pi_{T,i}*I(\pi_{T,i}>\rho)}
-#' Here, the recommended \eqn{\rho} is target toxicity rate.
+#' Here, the recommended \eqn{\rho} is the target toxicity rate.
 #'
-#' Once the utility score is computed for all the doses. The optimal biological dose is calculated by:
+#' Once the utility score is computed for all the doses, the optimal biological dose is calculated as follows:
 #' \deqn{ d = argmax_i[ U(p_i, q_i) | D]}
 #'
 #'
@@ -50,10 +50,10 @@
 #' \item Selected OBD level using utility function 3 (\code{$obd3}), as described in the Details section.  \cr
 #'
 #' }
-#'
+#' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' target.toxicity=0.3
-#' target.efficacy=0.4
+#' target.toxicity<-0.3
+#' target.efficacy<-0.4
 #' npts <- c(3,6,12,3,3)
 #' ntox <-  c(1,2,4,2,3)
 #' neff <-  c(0,0,5,1,1)
@@ -65,18 +65,17 @@
 #' @family single-agent phase I/II functions
 #'
 #' @references
-#' Daniel H. Li, James B. Whitmore, Wentian Guo and Yuan Ji  Toxicity and Efficacy Probability Interval Design for Phase I Adoptive Cell Therapy Dose-Finding Clinical Trials
+#'  Li DH, Whitmore JB, Guo W, Ji Y.  Toxicity and efficacy probability interval design for phase I adoptive cell therapy dose-finding clinical trials.
 #' \emph{Clinical Cancer Research}. 2017; 23:13-20.
-#'https://clincancerres.aacrjournals.org/content/23/1/13.long
-#'
-#' Suyu Liu, Valen E. Johnson. A robust Bayesian dose-finding design for phase I/II clinical trials
-#' \emph{Biostatistics}. 2016; 17:249-263.
+#'https://clincancerres.aacrjournals.org/content/23/1/13.long 
+#' 
+#' Liu S, Johnson VE.  A robust Bayesian dose-finding design for phase I/II clinical trials. \emph{Biostatistics}. 2016; 17(2):249-63.
 #' https://academic.oup.com/biostatistics/article/17/2/249/1744018
 #'
-#' Yanhong Zhou, J. Jack Lee, Ying Yuan. A utility-based Bayesian optimal interval (U-BOIN) phase I/II design to identify the optimal biological dose for targeted and immune therapies
+#' Zhou Y, Lee JJ, Yuan Y. A utility-based Bayesian optimal interval (U-BOIN) phase I/II design to identify the optimal biological dose for targeted and immune therapies.
 #' \emph{Statistics in Medicine}. 2019; 38:S5299-5316.
 #' https://onlinelibrary.wiley.com/doi/epdf/10.1002/sim.8361
-#'
+#' @export
 select.obd.kb <- function (target.toxicity, target.efficacy, npts , ntox , neff , p1=0.15, p2=0.40, q1=0.3, q2=0.6,
                            cutoff.eli.toxicity= 0.95, cutoff.eli.efficacy=0.3,
                            w1.toxicity =0.33, w2.toxicity=1.09, indicator =target.toxicity){

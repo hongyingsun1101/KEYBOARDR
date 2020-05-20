@@ -1,19 +1,19 @@
 #' Illustration of the Keyboard Design (Single-agent)
 #'
-#' This function serves solely as a visual example to illustrate how the
-#' keyboard design determines dosing decisions when conduncting a single-agent
+#' This function serves solely as an example to illustrate how the
+#' Keyboard design determines dosing decisions when conducting a single-agent
 #' trial.
 #'
 #' @details
-#' It is very simple to visualize how the keyboard design determines whether to
-#' keep, escalate, or de-escalate a dose. The "target key" (shown in blue) is
+#' It is straightforward to visualize how the Keyboard design determines whether to
+#' stay at the current dose, escalate, or de-escalate. The "target key" (shown in blue) is
 #' the proper dosing interval determined for the trial by the investigators.
 #' The "strongest key" (in red) is the interval with the highest posterior
 #' probability (given the dosage data observed thus far) of the current dose's
-#' true DLT rate. If the strongest key is located on the left side of the
-#' target key, we escalate the dose; if the strongest key is located on the
-#' right side of the target key, we de-escalate the dose; and if the strongest
-#' key is the target key, we retain the current dose. Thus, posterior
+#' true DLT rate. If the strongest key is to the left of the
+#' target key, then we escalate the dose; if the strongest key is to the
+#' right  of the target key, then we de-escalate the dose; and if the strongest
+#' key is the target key, then we retain the current dose. Thus, posterior
 #' probabilities are what directs dosage. Graphically, the strongest key is the
 #' one with the largest area under the posterior distribution curve of the DLT
 #' rate of the current dose.
@@ -21,14 +21,14 @@
 #' @param center The center of the target key (between 0 and 1).
 #' @param half_width The width, or tolerable deviation, to each side of the
 #'                   center (half of the target key's width).
-#' @param s1 The left boundary of strongest key.
-#' @param s2 The right boundary of strongest key.
+#' @param s1 The lower boundary of the strongest key.
+#' @param s2 The upper boundary of the strongest key.
 #' @param a The alpha parameter of the beta distribution.
 #' @param b The beta parameter of the beta distribution.
 #'
 #' @return A dose decision plot with the posterior distribution of the DLT rate
-#' of the current dose and the positions of the target and strongest keys.
-#'
+#' of the current dose and the positions of the target and the strongest keys.
+#' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
 #' ## Clear all plots before switching between graphical parameters
 #' par(mfrow = c(3, 1)) # for many plots in the same screen
@@ -44,10 +44,11 @@
 #' \emph{Clinical Cancer Research}. 2017; 23:3994-4003.
 #' http://clincancerres.aacrjournals.org/content/23/15/3994.full-text.pdf
 #'
-#' Pan H, Lin R, Yuan Y. Statistical Properties of the Keyboard Design with
-#' Extension to Drug-Combination Trials. 2017.
-#' https://arxiv.org/pdf/1712.06718.pdf
-#'
+#' Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials.
+#' \emph{Contemporary Clinical Trials}. 2020.
+#' https://doi.org/10.1016/j.cct.2020.105972
+#' 
+#' @export
 example.kb <- function(center, half_width, s1, s2, a, b) {
     ## Divide the range between 0 and 1 into keys of the same width, based on
     ## the target key's width.
