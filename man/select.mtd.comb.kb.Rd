@@ -98,6 +98,7 @@ This function uses \code{\link[Iso]{biviso}}.
 }
 
 \examples{
+\dontrun{
 ### Drug-combination trial ###
 
 ## Select the MTD based on the data from a 3 x 5 combination trial
@@ -112,6 +113,7 @@ sel.comb <- select.mtd.comb.kb(target=0.3, npts=n, ntox=y)
 
 summary.kb(sel.comb)
 plot.kb(sel.comb)
+}
 
 }
 \references{

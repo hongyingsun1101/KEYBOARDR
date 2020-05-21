@@ -42,6 +42,7 @@
 #'   cohort of patients (\code{$next_dc}).
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ### Drug-combination trial ###
 #'
 #' n <- matrix(c(3, 0, 0, 0, 0,
@@ -53,6 +54,7 @@
 #'
 #' nxt.comb <- next.comb.kb(target=0.3, npts=n, ntox=y, dose.curr=c(2, 2))
 #' summary.kb(nxt.comb)
+#' }
 #'
 #' @section Uses:
 #' This function uses \code{\link{get.boundary.comb.kb}}.

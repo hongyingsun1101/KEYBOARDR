@@ -71,11 +71,12 @@
 #'   target rate (which ideally would be the MTD) is of interest.
 #'
 #' @examples
+#' \dontrun{
 #' ### Single-agent trial ###
 #'
 #' bound <- get.boundary.kb(target=0.3, ncohort=10, cohortsize=3)
 #' print(bound)
-#'
+#' }
 #' @family single-agent functions
 #'
 #' @references

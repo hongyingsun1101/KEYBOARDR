@@ -26,6 +26,7 @@
 #' @return This function returns a figure.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ### Single-agent trial ###
 #'
 #' ## Get the operating characteristics for a Keyboard single-agent trial
@@ -102,6 +103,7 @@
 #' plot.kb(oc.obd.kb$npatients)
 #' plot.kb(oc.obd.kb$ntox)
 #' plot.kb(oc.obd.kb$neff)
+#' }
 #' @seealso \code{\link{summary.kb}}
 #' @export
 plot.kb <- function(x, ..., name = deparse(substitute(x))) {

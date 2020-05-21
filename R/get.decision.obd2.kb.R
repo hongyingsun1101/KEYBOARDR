@@ -84,10 +84,11 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' decision.obd2.kb <- get.decision.obd2.kb(target.toxicity=0.2,
 #'            target.efficacy=0.4, cohortsize=3, ncohort=10)
 #'  print(decision.obd2.kb)
-#' 
+#' }
 #' @family single-agent phase I/II functions
 #' 
 #'

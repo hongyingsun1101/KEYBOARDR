@@ -30,6 +30,7 @@ their results. The following functions are supported:\cr
 (4) select.obd.kb(), which yields the OBD.
 }
 \examples{
+\dontrun{
 ### Single-agent trial ###
 
 ## Summarize the object returned by get.oc.kb()
@@ -99,6 +100,7 @@ obd <- select.obd.kb (target.toxicity=target.toxicity,
        target.efficacy= target.efficacy, npts = npts,
        ntox = ntox, neff =  neff)
 summary.kb(obd)
+}
 
 }
 \seealso{

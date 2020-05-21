@@ -102,11 +102,12 @@ In most clinical applications, the target DLT rate is often a rough
   investigator.
 }
 \examples{
+\dontrun{
 ### Drug-combination trial ###
 
 bound <- get.boundary.comb.kb(target=0.3, ncohort=10, cohortsize=3)
 print(bound)
-
+}
 }
 \references{
 Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability

@@ -88,6 +88,7 @@
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' 
 #' @examples
+#' \dontrun{
 #'  toxicity.low <- 0.15
 #'  toxicity.moderate <- 0.25
 #'  toxicity.high <- 0.35
@@ -109,6 +110,7 @@
 #'                  target.efficacy=target.efficacy,
 #'                  cohortsize=cohortsize, ncohort=ncohort)
 #'  print(decision.obd)
+#' }
 #' 
 #' @family single-agent phase I/II functions
 #' 

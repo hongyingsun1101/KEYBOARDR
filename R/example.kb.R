@@ -30,6 +30,7 @@
 #' of the current dose and the positions of the target and the strongest keys.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ## Clear all plots before switching between graphical parameters
 #' par(mfrow = c(3, 1)) # for many plots in the same screen
 #' par(mar = c(5, 5, 2, 2)) # for only one plot per page
@@ -37,7 +38,7 @@
 #' example.kb(center = 0.19, half_width = 0.03, s1 = 0.4, s2 = 0.46, a = 3, b = 4) # de-escalation
 #' example.kb(center = 0.19, half_width = 0.03, s1 = 0.04, s2 = 0.1, a = 2, b = 12) # escalation
 #' example.kb(center = 0.19, half_width = 0.03, s1 = 0.16, s2 = 0.22, a = 2, b = 5) # stay
-#'
+#' }
 #' @references
 #' Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability
 #' Interval Design for Phase I Clinical Trials.

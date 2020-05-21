@@ -120,6 +120,7 @@ The following stopping rules are built in the Keyboard design:
 }
 }
 \examples{
+\dontrun{
 toxicity.low <- 0.15
 toxicity.moderate <- 0.25
 toxicity.high <- 0.35
@@ -148,7 +149,7 @@ plot.kb(oc.obd.kb$selpercent3)
 plot.kb(oc.obd.kb$npatients)
 plot.kb(oc.obd.kb$ntox)
 plot.kb(oc.obd.kb$neff)
-
+}
 }
 \references{
 Li DH, Whitmore JB, Guo W, Ji Y.  Toxicity and efficacy probability interval design for phase I adoptive cell therapy dose-finding clinical trials.

@@ -59,6 +59,7 @@
 #'   to select the MTD after completing the trial using the Keyboard design.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ### Single-agent trial ###
 #'
 #' n <- c(3, 3, 15, 9, 0)
@@ -67,6 +68,7 @@
 #' selmtd <- select.mtd.kb(target=0.3, npts=n, ntox=y)
 #' 
 #' selmtd
+#' }
 #'
 #' @family single-agent functions
 #'

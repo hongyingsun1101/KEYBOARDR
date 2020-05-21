@@ -64,6 +64,7 @@
 #' 
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' toxicity.low <- 0.15
 #' toxicity.moderate <- 0.25
 #' toxicity.high <- 0.35
@@ -92,7 +93,7 @@
 #' plot.kb(oc.obd.kb$npatients)
 #' plot.kb(oc.obd.kb$ntox)
 #' plot.kb(oc.obd.kb$neff)
-#'
+#' }
 #' @family single-agent phase I/II functions
 #'
 #' @references

@@ -19,6 +19,7 @@
 #'   Keyboard package functions.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ### Single-agent trial ###
 #'
 #' ## Summarize the object returned by get.oc.kb()
@@ -88,6 +89,7 @@
 #'        target.efficacy= target.efficacy, npts = npts,
 #'        ntox = ntox, neff =  neff)
 #' summary.kb(obd)
+#' }
 #'
 #' @seealso \code{\link{plot.kb}}
 #'

@@ -104,6 +104,7 @@ The following stopping rules are built in the Keyboard design:
 }
 }
 \examples{
+\dontrun{
 target.toxicity <- 0.30
 target.efficacy <- 0.40
 p.true <-c(0.08,0.30,0.60,0.80)
@@ -120,6 +121,7 @@ plot.kb(oc.obd2.kb$selpercent3)
 plot.kb(oc.obd2.kb$npatients)
 plot.kb(oc.obd2.kb$ntox)
 plot.kb(oc.obd2.kb$neff)
+}
 
 }
 \references{

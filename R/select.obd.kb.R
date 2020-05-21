@@ -52,6 +52,7 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' target.toxicity<-0.3
 #' target.efficacy<-0.4
 #' npts <- c(3,6,12,3,3)
@@ -61,6 +62,7 @@
 #'        target.efficacy= target.efficacy, npts = npts,
 #'        ntox = ntox, neff =  neff)
 #' print(obd)
+#' }
 #'
 #' @family single-agent phase I/II functions
 #'

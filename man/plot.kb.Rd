@@ -36,6 +36,7 @@ estimates of the toxicity probability for each dose, with corresponding
 95\% credible intervals.
 }
 \examples{
+\dontrun{
 ### Single-agent trial ###
 
 ## Get the operating characteristics for a Keyboard single-agent trial
@@ -112,6 +113,7 @@ plot.kb(oc.obd.kb$selpercent3)
 plot.kb(oc.obd.kb$npatients)
 plot.kb(oc.obd.kb$ntox)
 plot.kb(oc.obd.kb$neff)
+}
 }
 \seealso{
 \code{\link{summary.kb}}

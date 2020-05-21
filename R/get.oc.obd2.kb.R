@@ -57,6 +57,7 @@
 #'
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' target.toxicity <- 0.30
 #' target.efficacy <- 0.40
 #' p.true <-c(0.08,0.30,0.60,0.80)
@@ -73,6 +74,7 @@
 #' plot.kb(oc.obd2.kb$npatients)
 #' plot.kb(oc.obd2.kb$ntox)
 #' plot.kb(oc.obd2.kb$neff)
+#' }
 #'
 #' @family single-agent phase I/II functions
 #'

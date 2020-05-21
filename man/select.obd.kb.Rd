@@ -87,6 +87,7 @@ Once the utility score is computed for all the doses, the optimal biological dos
 \deqn{ d = argmax_i[ U(p_i, q_i) | D]}
 }
 \examples{
+\dontrun{
 target.toxicity<-0.3
 target.efficacy<-0.4
 npts <- c(3,6,12,3,3)
@@ -96,6 +97,7 @@ obd <- select.obd.kb (target.toxicity=target.toxicity,
        target.efficacy= target.efficacy, npts = npts,
        ntox = ntox, neff =  neff)
 print(obd)
+}
 
 }
 \references{

@@ -122,12 +122,14 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ### Single-agent trial ###
 #'
 #' oc <- get.oc.kb(target=0.3, p.true=c(0.05, 0.15, 0.3, 0.45, 0.6),
 #'                 ncohort=20, cohortsize=3, ntrial=1000)
 #'
 #' oc
+#' }
 #' 
 #'
 #' @section Uses:

@@ -107,10 +107,11 @@ when conducting the trial, no real-time calculation or model fitting is needed, 
 decision rules.
 }
 \examples{
+\dontrun{
 decision.obd2.kb <- get.decision.obd2.kb(target.toxicity=0.2,
            target.efficacy=0.4, cohortsize=3, ncohort=10)
  print(decision.obd2.kb)
-
+}
 }
 \references{
 Liu S. and Yuan, Y.  Bayesian Optimal Interval Designs for Phase I Clinical Trials, \emph{Journal of the Royal Statistical Society: Series C}. 2015; 64, 507-523.

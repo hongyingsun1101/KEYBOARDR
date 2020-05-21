@@ -51,6 +51,7 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ### Drug-combination trial ###
 #'
 #' p.true <- matrix(c(0.01, 0.03, 0.10, 0.20, 0.30,
@@ -59,6 +60,7 @@
 #'
 #' oc.comb <- get.oc.comb.kb(target=0.3, p.true=p.true, ncohort=20, cohortsize=3,
 #'                           n.earlystop=12, startdose=c(1, 1), ntrial=100)
+#' }
 #'
 #'
 #' @section Uses:

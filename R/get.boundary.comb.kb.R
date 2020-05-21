@@ -74,11 +74,12 @@
 #'   investigator.
 #'
 #' @examples
+#' \dontrun{
 #' ### Drug-combination trial ###
 #'
 #' bound <- get.boundary.comb.kb(target=0.3, ncohort=10, cohortsize=3)
 #' print(bound)
-#'
+#' }
 #' @family drug-combination functions
 #'
 #' @references

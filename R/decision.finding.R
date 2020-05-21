@@ -14,6 +14,7 @@
 #' @return The function \code{decision.finding()} returns the decision.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #'  output.matrix <- get.decision.obd.kb( toxicity.low = 0.15,
 #'                  toxicity.moderate= 0.25,
 #'                  toxicity.high = 0.35,
@@ -25,6 +26,7 @@
 #'                  cohortsize=3, ncohort=10)$decision.matrix
 #' decision <- decision.finding (out.matrix=output.matrix, n=6, t=1, r=3)
 #' decision
+#' }
 #' @export
 decision.finding <- function(out.matrix, n, t, r){
   rowindex <- which(out.matrix$N==n & out.matrix$T==t & out.matrix$R == r)

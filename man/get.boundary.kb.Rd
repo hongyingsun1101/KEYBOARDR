@@ -100,11 +100,12 @@ In most clinical applications, the target DLT rate is often a rough
   target rate (which ideally would be the MTD) is of interest.
 }
 \examples{
+\dontrun{
 ### Single-agent trial ###
 
 bound <- get.boundary.kb(target=0.3, ncohort=10, cohortsize=3)
 print(bound)
-
+}
 }
 \references{
 Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability

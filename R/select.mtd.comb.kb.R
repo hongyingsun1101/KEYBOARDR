@@ -71,6 +71,7 @@
 #'   to select the MTD after completing the trial using the Keyboard design.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
+#' \dontrun{
 #' ### Drug-combination trial ###
 #'
 #' ## Select the MTD based on the data from a 3 x 5 combination trial
@@ -85,6 +86,7 @@
 #'
 #' summary.kb(sel.comb)
 #' plot.kb(sel.comb)
+#' }
 #'
 #' @section Uses:
 #' This function uses \code{\link[Iso]{biviso}}.

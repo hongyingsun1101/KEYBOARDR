@@ -124,6 +124,7 @@ decision rules.
 This method is adopted from Li et al (2017)
 }
 \examples{
+\dontrun{
  toxicity.low <- 0.15
  toxicity.moderate <- 0.25
  toxicity.high <- 0.35
@@ -145,6 +146,7 @@ This method is adopted from Li et al (2017)
                  target.efficacy=target.efficacy,
                  cohortsize=cohortsize, ncohort=ncohort)
  print(decision.obd)
+}
 
 }
 \references{
