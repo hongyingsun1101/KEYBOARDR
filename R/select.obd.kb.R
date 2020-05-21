@@ -1,4 +1,3 @@
-#'
 #' Select the Optimal Biological Dose (OBD) for Single-agent Phase I/II Trials
 #'
 #' This function selects the optimal biological dose (OBD) at the end of a single-agent phase I/II trial.
