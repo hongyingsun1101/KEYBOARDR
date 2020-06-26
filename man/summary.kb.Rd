@@ -16,7 +16,7 @@ This function helps users to interpret the objects returned by other
   Keyboard package functions.
 }
 \description{
-This function generates a descriptive summary for objects returned by other functions.\cr\cr
+This function generates a descriptive summary for objects returned by other functions.\cr
 }
 \details{
 Unpacks objects returned by other functions with descriptions of

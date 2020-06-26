@@ -75,10 +75,10 @@ Similarly, there are four subintervals for efficacy as follows:\cr
 \item The high interval for efficacy is (efficacy.moderate, efficacy.high); efficacy.moderate is the upper boundary for the moderate efficacy interval, which can be specified by using the argument \code{efficacy.moderate} and efficacy.high is the upper boundary for the high efficacy interval, which can be specified by using the argument \code{efficacy.high}.
 \item The superb interval for efficacy is (efficacy.high, 1); efficacy.high is the upper boundary for the high efficacy interval, which can be specified by using the argument \code{efficacy.high}.
 }
-\cr
+
 One could suppose that there are d doses in the trial and the current dose is i. Define the number of patients as \eqn{n_i}, the number of patients who experienced toxicity as \eqn{x_i} and the number of responses as \eqn{y_i}.  The trial data can be represented as follows:
 \deqn{D= (n_i, x_i, y_i), i = 1, ..., d}
-\cr
+
 Assuming that the toxicity probability is \eqn{p_i} and the efficacy probability is \eqn{q_i} at dose level i, the probability unit intervals for toxicity and efficacy can be partitioned in to subintervals (a, b) and (c,d). (a, b)  is the subinterval for toxicity probability, and (c, d) is the subinterval for efficacy probability. (a, b) x (c,d) is one combination interval.  There are 16 combination intervals in total given the 4 subintervals for toxicity rate and the 4 subintervals for efficacy intervals.  Investigators would then be required to provide 16 decisions that correspond to these 16 combination intervals. Decision "D" denotes de-escalation, so the next cohort of patients will be treated at the next lower dose level.  Decision "E" denotes escalation, so the next cohort of patients will be treated at the next higher dose level.  Decision "S" denotes stay, so the next cohort of patients will be treated at the current dose level. The following is an example of a prespecified boundary table with a target toxicity rate of 0.2 and a target efficacy rate of 0.4:
 
 \tabular{rrrrrrr}{

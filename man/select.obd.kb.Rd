@@ -57,8 +57,7 @@ The default value is 0.3.}
 \enumerate{
 \item Selected OBD level using utility function 1 (\code{$obd1}), as described in the Details section. \cr
 \item Selected OBD level using utility function 2 (\code{$obd2}), as described in the Details section.  \cr
-\item Selected OBD level using utility function 3 (\code{$obd3}), as described in the Details section.  \cr
-
+\item Selected OBD level using utility function 3 (\code{$obd3}), as described in the Details section.  
 }
 }
 \description{
