@@ -81,7 +81,6 @@ The MTD selection and dose escalation/de-escalation rules are two
   to select the MTD after completing the trial using the Keyboard design.
 }
 \examples{
-\dontrun{
 ### Single-agent trial ###
 
 n <- c(3, 3, 15, 9, 0)
@@ -90,7 +89,6 @@ y <- c(0, 0, 4, 4, 0)
 selmtd <- select.mtd.kb(target=0.3, npts=n, ntox=y)
 
 selmtd
-}
 
 }
 \references{

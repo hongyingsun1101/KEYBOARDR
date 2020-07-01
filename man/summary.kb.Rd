@@ -30,7 +30,7 @@ their results. The following functions are supported:\cr
 (4) select.obd.kb(), which yields the OBD.
 }
 \examples{
-\dontrun{
+\donttest{
 ### Single-agent trial ###
 
 ## Summarize the object returned by get.oc.kb()

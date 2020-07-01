@@ -71,12 +71,10 @@
 #'   target rate (which ideally would be the MTD) is of interest.
 #'
 #' @examples
-#' \dontrun{
 #' ### Single-agent trial ###
 #'
 #' bound <- get.boundary.kb(target=0.3, ncohort=10, cohortsize=3)
 #' print(bound)
-#' }
 #' @family single-agent functions
 #'
 #' @references
@@ -88,10 +86,10 @@
 #' @export
 get.boundary.kb <- function(target, ncohort, cohortsize, marginL=0.05, marginR=0.05,cutoff.eli=0.95, n.earlystop=100, extrasafe=FALSE, offset=0.05) {
   ### simple error checking
-  if(target<0.05) {cat("Error: the target is too low! \n"); return();}
-  if(target>0.6)  {cat("Error: the target is too high! \n"); return();}
-  if(offset>=0.5) {cat("Error: the offset is too large! \n"); return();}
-  if(n.earlystop<=6) {cat("Warning: the value of n.earlystop is too low to ensure good operating characteristics. Recommend n.earlystop = 9 to 18 \n"); return();}
+  if(target<0.05) {warning("Error: the target is too low! \n"); return();}
+  if(target>0.6)  {warning("Error: the target is too high! \n"); return();}
+  if(offset>=0.5) {warning("Error: the offset is too large! \n"); return();}
+  if(n.earlystop<=6) {warning("Warning: the value of n.earlystop is too low to ensure good operating characteristics. Recommend n.earlystop = 9 to 18 \n"); return();}
 
     ## get cutoffs for keys
     getkey <- function(a1, a2)

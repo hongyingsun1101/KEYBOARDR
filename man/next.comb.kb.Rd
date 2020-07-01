@@ -77,7 +77,6 @@ This function uses \code{\link{get.boundary.comb.kb}}.
 }
 
 \examples{
-\dontrun{
 ### Drug-combination trial ###
 
 n <- matrix(c(3, 0, 0, 0, 0,
@@ -89,7 +88,6 @@ y <- matrix(c(0, 0, 0, 0, 0,
 
 nxt.comb <- next.comb.kb(target=0.3, npts=n, ntox=y, dose.curr=c(2, 2))
 summary.kb(nxt.comb)
-}
 
 }
 \references{

@@ -84,7 +84,7 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' decision.obd2.kb <- get.decision.obd2.kb(target.toxicity=0.2,
 #'            target.efficacy=0.4, cohortsize=3, ncohort=10)
 #'  print(decision.obd2.kb)
@@ -105,9 +105,9 @@
 #' @export
 get.decision.obd2.kb <- function(target.toxicity, target.efficacy, cohortsize, ncohort,cutoff.eli.toxicity= 0.95, cutoff.eli.efficacy=0.3, decision=c("E","E","S","S","S","S","D","D","D")){
   ## simple error checking
-  if(target.toxicity<0.05) {cat("Error: the target toxcicity rate is too low! \n"); return();}
-  if(target.toxicity>0.6)  {cat("Error: the target toxicity rate is too high! \n"); return();}
-  if(target.efficacy<= 0.19) {cat("Error: the target efficacy rate is too low! \n");  return();}
+  if(target.toxicity<0.05) {warning("Error: the target toxcicity rate is too low! \n"); return();}
+  if(target.toxicity>0.6)  {warning("Error: the target toxicity rate is too high! \n"); return();}
+  if(target.efficacy<= 0.19) {warning("Error: the target efficacy rate is too low! \n");  return();}
 
   #write function to generate boundaries, can't use BOIN package because BOIN package restricts the toxicity not greater than 0.6.
   #finds the boundary

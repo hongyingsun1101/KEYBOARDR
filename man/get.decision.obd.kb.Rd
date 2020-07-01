@@ -124,7 +124,7 @@ decision rules.
 This method is adopted from Li et al (2017)
 }
 \examples{
-\dontrun{
+\donttest{
  toxicity.low <- 0.15
  toxicity.moderate <- 0.25
  toxicity.high <- 0.35

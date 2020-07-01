@@ -122,7 +122,7 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ### Single-agent trial ###
 #'
 #' oc <- get.oc.kb(target=0.3, p.true=c(0.05, 0.15, 0.3, 0.45, 0.6),
@@ -149,11 +149,11 @@ get.oc.kb <- function (target, p.true, ncohort, cohortsize,
                        marginL = 0.05, marginR = 0.05, cutoff.eli = 0.95,
                        extrasafe = FALSE, offset = 0.05, ntrial = 1000) {
     if (offset >= 0.5) {
-        cat("Error: the offset is too large! \n")
+        warning("Error: the offset is too large! \n")
         return()
     }
     if (n.earlystop <= 6) {
-        cat("Warning: the value of n.earlystop is too low to ensure good operating characteristics.",
+        warning("Warning: the value of n.earlystop is too low to ensure good operating characteristics.",
             "Recommend n.earlystop = 9 to 18 \n")
         return()
     }

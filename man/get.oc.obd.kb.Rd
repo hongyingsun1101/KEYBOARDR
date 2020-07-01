@@ -120,7 +120,7 @@ The following stopping rules are built in the Keyboard design:
 }
 }
 \examples{
-\dontrun{
+\donttest{
 toxicity.low <- 0.15
 toxicity.moderate <- 0.25
 toxicity.high <- 0.35

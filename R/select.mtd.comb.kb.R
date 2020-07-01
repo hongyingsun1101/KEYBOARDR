@@ -71,7 +71,6 @@
 #'   to select the MTD after completing the trial using the Keyboard design.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
 #' ### Drug-combination trial ###
 #'
 #' ## Select the MTD based on the data from a 3 x 5 combination trial
@@ -86,7 +85,6 @@
 #'
 #' summary.kb(sel.comb)
 #' plot.kb(sel.comb)
-#' }
 #'
 #' @section Uses:
 #' This function uses \code{\link[Iso]{biviso}}.
@@ -117,7 +115,7 @@ select.mtd.comb.kb <- function(target, npts, ntox, cutoff.eli = 0.95,
 
     y = ntox; n = npts;
     if (nrow(n) > ncol(n) | nrow(y) > ncol(y)) {
-        cat("Error: npts and ntox should be arranged in a way (i.e., rotated)",
+        warning("Error: npts and ntox should be arranged in a way (i.e., rotated)",
             "such that for each of them, the number of rows is less than or",
             "equal to the number of columns.")
         return()
@@ -221,7 +219,7 @@ select.mtd.comb.kb <- function(target, npts, ntox, cutoff.eli = 0.95,
 
     ## previously "if (mtd.contour == FALSE)":
     if (selectdoses[1,1] == 99 && selectdoses[1,2] == 99) {
-        cat("All tested doses are overly toxic. No MTD is selected! \n")
+        warning("All tested doses are overly toxic. No MTD is selected! \n")
         return(list(target = target, MTD = 99, p_est = matrix(NA,
                                                               nrow = dim(npts)[1],
                                                               ncol = dim(npts)[2])))
@@ -233,7 +231,7 @@ select.mtd.comb.kb <- function(target, npts, ntox, cutoff.eli = 0.95,
     ## For mtd.contour == TRUE
     #else {
     #    if (length(selectdoses) == 0) {
-    #        cat("All tested doses are overly toxic. No MTD is selected! \n")
+    #        warning("All tested doses are overly toxic. No MTD is selected! \n")
     #        return(list(target = target, MTD = 99, p_est = matrix(NA,
     #                                                              nrow = dim(npts)[1],
     #                                                              ncol = dim(npts)[2])))

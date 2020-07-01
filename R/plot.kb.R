@@ -26,7 +26,7 @@
 #' @return This function returns a figure.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ### Single-agent trial ###
 #'
 #' ## Get the operating characteristics for a Keyboard single-agent trial
@@ -122,7 +122,9 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
 
     ## plotting for get.oc.kb()
     if (!is.null(objectPlot$percentstop)) {
-        dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+        # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+        opar <- par(no.readonly = TRUE)
+        on.exit(par(opar))
         par(mfrow = c(1,1), mar = c(5,5,4,2))
 
         if (length(new.obj) == 2) { ## WHEN TRUE??? Shouldn't it be length(x)?
@@ -149,6 +151,8 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
             }
         }
         else {
+            opar <- par(no.readonly = TRUE)
+            on.exit(par(opar))
             par(mfrow = c(2,1), mar = c(5,5,4,2))
 
             bplot = barplot(objectPlot$selpercent,
@@ -180,8 +184,10 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
                 stop(paste("Package: ", "epade", " not found!!!", sep = ""))
             }
         }
-        dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+        # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
         #par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+        opar <- par(no.readonly = TRUE)
+        on.exit(par(opar))
         par(mfrow = c(1,1), mar = c(5,5,2,2))
 
         if (strpattern == "selpercent") {
@@ -328,7 +334,10 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
         #
         else {
             if (strpattern == "none") {
-                dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+                # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+                opar <- par(no.readonly = TRUE)
+                on.exit(par(opar))
+
                 par(mfrow = c(2,1), mar = c(4,3,2,2))
                 requireNamespace("epade")
                 epade::bar3d.ade(objectPlot$selpercent,
@@ -371,7 +380,9 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
         }
         else {
             if (!is.null(objectPlot$p_est)) {
-                dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+                # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+                opar <- par(no.readonly = TRUE)
+                on.exit(par(opar))
                 par(mfrow = c(1,1), mar = c(5,5,4,2))
 
                 ## Note that this if-else is switched from that of the BOIN code.
@@ -390,7 +401,8 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
                         phatx = as.numeric(as.character(p_hat[1:numbs]))
                         lwr = as.numeric(as.character(conf.intv[1:numbs,1]))
                         upr = as.numeric(as.character(conf.intv[1:numbs,2]))
-
+                        opar <- par(no.readonly = TRUE)
+                        on.exit(par(opar))
                         par(mar = c(5,5,4,2))
                         plot(1:numbs2, ylim = c(0,1), xlab = 'dose level',
                              ylab = 'DLT rate', pch = '', xaxt = "n", cex.lab = 1.3)
@@ -434,7 +446,9 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
 
         ## plotting for get.oc.obd.kb()
     else if (!is.null(objectPlot$name) && objectPlot$name == "get.oc.obd.kb") {
-        dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+        # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
+        opar <- par(no.readonly = TRUE)
+        on.exit(par(opar))
         par(mfrow = c(1,1), mar = c(5,5,4,2))
 
         if (length(new.obj) == 2) { ## WHEN TRUE??? Shouldn't it be length(x)?
@@ -537,5 +551,5 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
         stop("Please double check and specify the variable to be plotted...\n")
         ## edit: changed from warning()
     }
-    par(op)
+    par(opar)
 }

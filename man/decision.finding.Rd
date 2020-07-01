@@ -25,7 +25,6 @@ This function returns the decision given the decision table, the total number of
 \code{decision.finding()} is a helper function to \code{get.decision.obd.kb()}  and \code{get.decision.obd2.kb()}. \code{decision.finding()} returns the decision given the decision table, the total number of patients, the number of patients who experienced toxicity and the number of responses. If the number of subjects enrolled is n, then the number of possible combination for subjects who experienced toxicity and efficacy is (n+1) x (n+1).  For n = 30, the number of entries is 961. Finding the decision given a scenario is tedious.  \code{decision.finding()} resolves this challenge by helping users to obtain the decision easily with the input of the decision table (output from \code{get.decision.obd.kb()}  and \code{get.decision.obd2.kb()}), the total number of patients, the number of patients who experienced toxicity and the number of responses.
 }
 \examples{
-\dontrun{
  output.matrix <- get.decision.obd.kb( toxicity.low = 0.15,
                  toxicity.moderate= 0.25,
                  toxicity.high = 0.35,
@@ -37,7 +36,6 @@ This function returns the decision given the decision table, the total number of
                  cohortsize=3, ncohort=10)$decision.matrix
 decision <- decision.finding (out.matrix=output.matrix, n=6, t=1, r=3)
 decision
-}
 }
 \author{
 Hongying Sun, Li Tang, and Haitao Pan

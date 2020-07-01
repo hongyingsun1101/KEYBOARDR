@@ -104,7 +104,7 @@ The following stopping rules are built in the Keyboard design:
 }
 }
 \examples{
-\dontrun{
+\donttest{
 target.toxicity <- 0.30
 target.efficacy <- 0.40
 p.true <-c(0.08,0.30,0.60,0.80)

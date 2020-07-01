@@ -57,7 +57,7 @@
 #'
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' target.toxicity <- 0.30
 #' target.efficacy <- 0.40
 #' p.true <-c(0.08,0.30,0.60,0.80)
@@ -96,9 +96,9 @@ get.oc.obd2.kb <- function( target.toxicity, target.efficacy,ncohort=10, cohorts
                            cutoff.eli.efficacy=0.3, w1.toxicity =0.33, w2.toxicity=1.09, indicator =  target.toxicity){
 
     # Error checking
-    if(target.toxicity<0.05) {cat("Error: the target toxcicity rate is too low! \n"); return();}
-    if(target.toxicity>0.6)  {cat("Error: the target toxicity rate is too high! \n"); return();}
-    if(target.efficacy<= 0.19) {cat("Error: the target efficacy rate is too low! \n");  return();}
+    if(target.toxicity<0.05) {warning("Error: the target toxcicity rate is too low! \n"); return();}
+    if(target.toxicity>0.6)  {warning("Error: the target toxicity rate is too high! \n"); return();}
+    if(target.efficacy<= 0.19) {warning("Error: the target efficacy rate is too low! \n");  return();}
 
 
 

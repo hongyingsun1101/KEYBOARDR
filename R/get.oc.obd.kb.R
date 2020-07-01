@@ -64,7 +64,7 @@
 #' 
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' toxicity.low <- 0.15
 #' toxicity.moderate <- 0.25
 #' toxicity.high <- 0.35

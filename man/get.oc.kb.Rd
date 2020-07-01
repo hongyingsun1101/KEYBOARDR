@@ -161,7 +161,7 @@ This function uses \code{\link{get.boundary.kb}} and
 }
 
 \examples{
-\dontrun{
+\donttest{
 ### Single-agent trial ###
 
 oc <- get.oc.kb(target=0.3, p.true=c(0.05, 0.15, 0.3, 0.45, 0.6),

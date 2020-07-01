@@ -19,7 +19,7 @@
 #'   Keyboard package functions.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ### Single-agent trial ###
 #'
 #' ## Summarize the object returned by get.oc.kb()
@@ -200,7 +200,6 @@ summary.kb <- function(object, ...) {
     for (i in 1:dim(object$p.true)[1]) {
       cat(formatC(object$nptsdose[i,], digits = 2, format = "f", width = 5),
           sep = "  ", "\n")
-      ## In BOIN package, 'nptsdose' is 'npatients'
     }
     cat("\n")
     cat("average number of toxicity observed at each dose combination:\n")

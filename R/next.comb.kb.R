@@ -42,7 +42,6 @@
 #'   cohort of patients (\code{$next_dc}).
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
 #' ### Drug-combination trial ###
 #'
 #' n <- matrix(c(3, 0, 0, 0, 0,
@@ -54,7 +53,6 @@
 #'
 #' nxt.comb <- next.comb.kb(target=0.3, npts=n, ntox=y, dose.curr=c(2, 2))
 #' summary.kb(nxt.comb)
-#' }
 #'
 #' @section Uses:
 #' This function uses \code{\link{get.boundary.comb.kb}}.
@@ -112,7 +110,7 @@ next.comb.kb <- function(target, npts, ntox, dose.curr, n.earlystop = 100,
 
     ## determine if early termination is needed
     if (n[d[1],d[2]] >= n.earlystop) {
-        cat("Terminate the trial because the number of patients treated at (", d[1], ", ", d[2], ") has reached",
+        warning("Terminate the trial because the number of patients treated at (", d[1], ", ", d[2], ") has reached",
             n.earlystop,  "\n")
         d = c(99, 99)
         earlystop = 1
@@ -122,7 +120,7 @@ next.comb.kb <- function(target, npts, ntox, dose.curr, n.earlystop = 100,
         if (d[1]==1 && d[2]==1 && y[d[1],d[2]]>=b.elim[nc]) {
             d = c(99, 99)
             earlystop = 1
-            cat("Terminate the trial because the lowest dose is overly toxic \n")
+            warning("Terminate the trial because the lowest dose is overly toxic \n")
         }
 
         ## implement the extra safe rule by decreasing the elimination cutoff for the lowest dose
@@ -131,7 +129,7 @@ next.comb.kb <- function(target, npts, ntox, dose.curr, n.earlystop = 100,
                 if (1-pbeta(target, y[1,1]+1, n[1,1]-y[1,1]+1) > cutoff.eli-offset) {
                     d = c(99, 99)
                     earlystop = 1
-                    cat("Terminate the trial because the lowest dose is overly toxic \n")
+                    warning("Terminate the trial because the lowest dose is overly toxic \n")
                 }
             }
         }

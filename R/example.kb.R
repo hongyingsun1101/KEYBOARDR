@@ -30,15 +30,15 @@
 #' of the current dose and the positions of the target and the strongest keys.
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
 #' ## Clear all plots before switching between graphical parameters
+#' opar <- par(no.readonly = TRUE)
+#' on.exit(par(opar))
 #' par(mfrow = c(3, 1)) # for many plots in the same screen
 #' par(mar = c(5, 5, 2, 2)) # for only one plot per page
 #'
 #' example.kb(center = 0.19, half_width = 0.03, s1 = 0.4, s2 = 0.46, a = 3, b = 4) # de-escalation
 #' example.kb(center = 0.19, half_width = 0.03, s1 = 0.04, s2 = 0.1, a = 2, b = 12) # escalation
 #' example.kb(center = 0.19, half_width = 0.03, s1 = 0.16, s2 = 0.22, a = 2, b = 5) # stay
-#' }
 #' @references
 #' Yan F, Mandrekar SJ, Yuan Y. Keyboard: A Novel Bayesian Toxicity Probability
 #' Interval Design for Phase I Clinical Trials.
@@ -137,67 +137,4 @@ example.kb <- function(center, half_width, s1, s2, a, b) {
 }
 
 
-## ## Old plotting examples:
-## par(mfrow = c(3, 1))
-## par(mar = c(5, 5, 2, 2))
-##
-## t = 0.19
-## eps = 0.03
-## keys = getkeys(t, eps)
-##
-## ### deescalation
-## a = 3
-## b = 4
-## s1 = 0.4
-## s2 = 0.46
-## plot(seq(0, 1, 0.01), dbeta(seq(0, 1, 0.01), a, b),
-##      type = "l", xlab = "DLT rate", ylab = "Density", cex.lab = 1.4)
-## text(0.9, 1.7, "Deescalation", cex = 1.8)
-##
-## for(i in 1:length(keys)) {
-##     lines(c(keys[i], keys[i]), c(0, dbeta(keys[i], a, b)))
-## }
-## shadekey(t, eps, a, b, "skyblue")  #target key
-## shadekey((s1 + s2)/2, s2 - (s1 + s2)/2, a, b, "red")  #strongest key
-## t_interval = sprintf("(%.2f, %.2f)", t-eps, t+eps)
-## text(t, (dbeta(t-eps, a, b) + dbeta(t+eps, a, b))/2, t_interval, cex = 1.0, pos = 2)
-## #s_interval = sprintf("(%.2f, %.2f)", s1, s2)
-## #text(s2, (dbeta(s1, a, b) + dbeta(s2, a, b))/2, s_interval, cex = 1.0, pos = 4, offset = 1)
-##
-## ### escalation
-## a = 2
-## b = 12
-## s1 = 0.04
-## s2 = 0.1
-## plot(seq(0, 1, 0.01), dbeta(seq(0, 1, 0.01), a, b),
-##      type = "l", xlab = "DLT rate", ylab = "Density", cex.lab = 1.4)
-## text(0.9, 4, "Escalation", cex=1.8)
-##
-## for(i in 1:length(keys))
-## {
-##     lines(c(keys[i], keys[i]), c(0, dbeta(keys[i], a, b)))
-## }
-## shadekey(t, eps, a, b, "skyblue")  #target key
-## shadekey((s1 + s2)/2, s2 - (s1 + s2)/2, a, b, "red")  #strongest key
-## t_interval = sprintf("(%.2f, %.2f)", t-eps, t+eps)
-## text(t, (dbeta(t-eps, a, b) + dbeta(t+eps, a, b))/2, t_interval, cex = 1.0, pos = 4)
-## #s_interval = sprintf("(%.2f, %.2f)", s1, s2)
-## #text(s2, dbeta(s2, a, b), s_interval, cex = 1.0, pos = 4, offset = 1)
-##
-## ### stay
-## a = 2
-## b = 5
-## s1 = t-eps
-## s2 = t+eps
-## plot(seq(0, 1, 0.01), dbeta(seq(0, 1, 0.01), a, b),
-##      type = "l", xlab = "DLT rate", ylab = "Density", cex.lab = 1.4)
-## text(0.9, 2, "Stay", cex=1.8)
-##
-## for(i in 1:length(keys))
-## {
-##     lines(c(keys[i], keys[i]), c(0, dbeta(keys[i], a, b)))
-## }
-## shadekey(t, eps, a, b, "skyblue")  #target key
-## shadekey(t, eps, a, b, "red")  #strongest key
-## s_interval = sprintf("(%.2f, %.2f)", s1, s2)
-## text(s2, (dbeta(s1, a, b) + dbeta(s2, a, b))/2, s_interval, cex = 1.0, pos = 4, offset = 2)
+

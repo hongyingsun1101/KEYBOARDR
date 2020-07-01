@@ -36,7 +36,7 @@ estimates of the toxicity probability for each dose, with corresponding
 95\% credible intervals.
 }
 \examples{
-\dontrun{
+\donttest{
 ### Single-agent trial ###
 
 ## Get the operating characteristics for a Keyboard single-agent trial

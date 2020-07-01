@@ -46,7 +46,7 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' target.toxicity<-0.3
 #' target.efficacy<-0.4
 #' npts <- c(3,6,12,3,3)

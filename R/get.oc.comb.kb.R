@@ -51,7 +51,6 @@
 #' }
 #' @author Hongying Sun, Li Tang, and Haitao Pan
 #' @examples
-#' \dontrun{
 #' ### Drug-combination trial ###
 #'
 #' p.true <- matrix(c(0.01, 0.03, 0.10, 0.20, 0.30,
@@ -60,12 +59,9 @@
 #'
 #' oc.comb <- get.oc.comb.kb(target=0.3, p.true=p.true, ncohort=20, cohortsize=3,
 #'                           n.earlystop=12, startdose=c(1, 1), ntrial=100)
-#' }
-#'
 #'
 #' @section Uses:
-#' This function uses \code{\link{get.boundary.comb.kb}} and
-#' \code{\link[BOIN]{select.mtd.comb}}.
+#' This function uses \code{\link{get.boundary.comb.kb}} 
 #'
 #' @family drug-combination functions
 #'
@@ -80,17 +76,16 @@
 #' Pan H, Lin R, Yuan Y. Keyboard design for phase I drug-combination trials.
 #' \emph{Contemporary Clinical Trials}. 2020.
 #' https://doi.org/10.1016/j.cct.2020.105972
-#' @import BOIN
 #' @export
 get.oc.comb.kb <- function(target, p.true, ncohort, cohortsize,
                            n.earlystop = 100, marginL = 0.05, marginR = 0.05,
                            startdose = c(1, 1), cutoff.eli = 0.95,
                            extrasafe = FALSE, offset = 0.05, ntrial = 1000) {
 
-    if (!requireNamespace("BOIN", quietly = TRUE)) {
-        stop("Package \"BOIN\" needed for this function to work.",
-             "Please install it.", call. = FALSE)
-    }
+    # if (!requireNamespace("BOIN", quietly = TRUE)) {
+    #     stop("Package \"BOIN\" needed for this function to work.",
+    #          "Please install it.", call. = FALSE)
+    # }
 
     JJ = nrow(p.true)
     KK = ncol(p.true)
@@ -262,7 +257,123 @@ get.oc.comb.kb <- function(target, p.true, ncohort, cohortsize,
             dselect[trial, ] = c(99, 99)
         }
         else {
-            selcomb = BOIN::select.mtd.comb(target, n, y, cutoff.eli, extrasafe, offset)
+            # select.mtd.comb is adapted from BOIN 
+ select.mtd.comb <- function (target, npts, ntox, cutoff.eli = 0.95, extrasafe = FALSE, offset = 0.05, mtd.contour = FALSE) {
+    y = ntox
+    n = npts
+    if (nrow(n) > ncol(n) | nrow(y) > ncol(y)) {
+        stop("npts and ntox should be arranged in a way (i.e., rotated) such that for each of them, the number of rows is less than or equal to the number of columns.")
+    }
+    elimi = matrix(0, dim(n)[1], dim(n)[2])
+    if (extrasafe) {
+        if (n[1, 1] >= 3) {
+            if (1 - pbeta(target, y[1, 1] + 1, n[1, 1] - y[1, 
+                1] + 1) > cutoff.eli - offset) {
+                elimi[, ] = 1
+            }
+        }
+    }
+    for (i in 1:dim(n)[1]) {
+        for (j in 1:dim(n)[2]) {
+            if (n[i, j] >= 3) {
+                if (1 - pbeta(target, y[i, j] + 1, n[i, j] - 
+                  y[i, j] + 1) > cutoff.eli) {
+                  elimi[i:dim(n)[1], j] = 1
+                  elimi[i, j:dim(n)[2]] = 1
+                  break
+                }
+            }
+        }
+    }
+    if (elimi[1] == 1) {
+        selectdose = c(99, 99)
+        selectdoses = matrix(selectdose, nrow = 1)
+    }
+    else {
+        phat = (y + 0.05)/(n + 0.1)
+        phat = Iso::biviso(phat, n + 0.1, warn = TRUE)[, ]
+        phat.out = phat
+        phat.out[n == 0] = NA
+        phat[elimi == 1] = 1.1
+        phat = phat * (n != 0) + (1e-05) * (matrix(rep(1:dim(n)[1], 
+            each = dim(n)[2], len = length(n)), dim(n)[1], byrow = T) + 
+            matrix(rep(1:dim(n)[2], each = dim(n)[1], len = length(n)), 
+                dim(n)[1]))
+        phat[n == 0] = 10
+        selectdose = which(abs(phat - target) == min(abs(phat - 
+            target)), arr.ind = TRUE)
+        if (length(selectdose) > 2) 
+            selectdose = selectdose[1, ]
+        aa = function(x) as.numeric(as.character(x))
+        if (mtd.contour == TRUE) {
+            selectdoses = cbind(row = 1:dim(n)[1], col = rep(99, 
+                dim(n)[1]))
+            for (k in dim(n)[1]:1) {
+                kn = n[k, ]
+                ky = y[k, ]
+                kelimi = elimi[k, ]
+                kphat = phat[k, ]
+                if (kelimi[1] == 1 || sum(n[kelimi == 0]) == 
+                  0) {
+                  kseldose = 99
+                }
+                else {
+                  adm.set = (kn != 0) & (kelimi == 0)
+                  adm.index = which(adm.set == T)
+                  y.adm = ky[adm.set]
+                  n.adm = kn[adm.set]
+                  selectd = sort(abs(kphat[adm.set] - target), 
+                    index.return = T)$ix[1]
+                  kseldose = adm.index[selectd]
+                }
+                selectdoses[k, 2] = ifelse(is.na(kseldose), 99, 
+                  kseldose)
+                if (k < dim(n)[1]) 
+                  if (selectdoses[k + 1, 2] == dim(n)[2]) 
+                    selectdoses[k, 2] = dim(n)[2]
+                if (k < dim(n)[1]) 
+                  if (aa(selectdoses[k + 1, 2]) == dim(n)[2] & 
+                    aa(selectdoses[k + 1, 2]) == aa(selectdoses[k, 
+                      2])) 
+                    selectdoses[k, 2] = 99
+            }
+        }
+        else {
+            selectdoses = matrix(99, nrow = 1, ncol = 2)
+            selectdoses[1, ] = matrix(selectdose, nrow = 1)
+        }
+        selectdoses = matrix(selectdoses[selectdoses[, 2] != 
+            99, ], ncol = 2)
+        colnames(selectdoses) = c("DoseA", "DoseB")
+    }
+    if (mtd.contour == FALSE) {
+        if (selectdoses[1, 1] == 99 && selectdoses[1, 2] == 99) {
+            cat("All tested doses are overly toxic. No MTD is selected! \n")
+            out = list(target = target, MTD = 99, p_est = matrix(NA, 
+                nrow = dim(npts)[1], ncol = dim(npts)[2]))
+        }
+        else {
+            out = list(target = target, MTD = selectdoses, p_est = round(phat.out, 
+                2))
+        }
+        return(out)
+    }
+    else {
+        if (length(selectdoses) == 0) {
+            cat("All tested doses are overly toxic. No MTD is selected! \n")
+            out = list(target = target, MTD = 99, p_est = matrix(NA, 
+                nrow = dim(npts)[1], ncol = dim(npts)[2]))
+        }
+        else {
+            out = list(target = target, MTD = selectdoses, p_est = round(phat.out, 
+                2))
+        }
+        return(out)
+    }
+}
+
+            
+            selcomb = select.mtd.comb(target, n, y, cutoff.eli, extrasafe, offset)
             dselect[trial, 1] = selcomb$MTD[1]
             dselect[trial, 2] = selcomb$MTD[2]
         }
