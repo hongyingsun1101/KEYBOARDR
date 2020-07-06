@@ -180,10 +180,7 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
         if (!requireNamespace("epade", quietly = TRUE)) {
                     stop("Package \"epade\" needed for this function to work.",
              "Please install it.", call. = FALSE)
-            # install.packages("epade", repos="http://cran.us.r-project.org", dependencies=TRUE) # don't install packages without user's permission
-            # if (!requireNamespace("epade", quietly = TRUE)) {
-            #     stop(paste("Package: ", "epade", " not found!!!", sep = ""))
-            # }
+
         }
         # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
         #par(mar=c(0,0,0,0),oma=c(0,0,0,0))
@@ -427,10 +424,6 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
                                 stop("Package \"epade\" needed for this function to work.",
              "Please install it.", call. = FALSE)
 
-                        # install.packages("epade", repos = "http://cran.us.r-project.org", dependencies = TRUE)
-                        # requireNamespace("epade")
-                        # if (!requireNamespace("epade", quietly = TRUE))
-                        #    stop(paste("Package: ", "epade", " not found!!!", sep = ""))
                     }
 
                     requireNamespace("epade", quietly = TRUE)
