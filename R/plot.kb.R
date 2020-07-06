@@ -178,11 +178,12 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
     else if(!is.null(objectPlot$pcs)) { # | !is.null(objectPlot$pcs.contour)) {
 
         if (!requireNamespace("epade", quietly = TRUE)) {
-            install.packages("epade", repos="http://cran.us.r-project.org", dependencies=TRUE)
-            #require("epade")
-            if (!requireNamespace("epade", quietly = TRUE)) {
-                stop(paste("Package: ", "epade", " not found!!!", sep = ""))
-            }
+                    stop("Package \"epade\" needed for this function to work.",
+             "Please install it.", call. = FALSE)
+            # install.packages("epade", repos="http://cran.us.r-project.org", dependencies=TRUE) # don't install packages without user's permission
+            # if (!requireNamespace("epade", quietly = TRUE)) {
+            #     stop(paste("Package: ", "epade", " not found!!!", sep = ""))
+            # }
         }
         # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
         #par(mar=c(0,0,0,0),oma=c(0,0,0,0))
@@ -423,10 +424,13 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
                 }
                 else{ ## select.mtd.comb.kb()
                     if (!requireNamespace("epade", quietly = TRUE)) {
-                        install.packages("epade", repos = "http://cran.us.r-project.org", dependencies = TRUE)
-                        requireNamespace("epade")
-                        if (!requireNamespace("epade", quietly = TRUE))
-                           stop(paste("Package: ", "epade", " not found!!!", sep = ""))
+                                stop("Package \"epade\" needed for this function to work.",
+             "Please install it.", call. = FALSE)
+
+                        # install.packages("epade", repos = "http://cran.us.r-project.org", dependencies = TRUE)
+                        # requireNamespace("epade")
+                        # if (!requireNamespace("epade", quietly = TRUE))
+                        #    stop(paste("Package: ", "epade", " not found!!!", sep = ""))
                     }
 
                     requireNamespace("epade", quietly = TRUE)
@@ -546,10 +550,10 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
         }
     }
 
-    ## Unnecessary?
+
     else {
         stop("Please double check and specify the variable to be plotted...\n")
-        ## edit: changed from warning()
+
     }
     par(opar)
 }
