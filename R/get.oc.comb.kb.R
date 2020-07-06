@@ -348,7 +348,7 @@ get.oc.comb.kb <- function(target, p.true, ncohort, cohortsize,
     }
     if (mtd.contour == FALSE) {
         if (selectdoses[1, 1] == 99 && selectdoses[1, 2] == 99) {
-            cat("All tested doses are overly toxic. No MTD is selected! \n")
+            message("All tested doses are overly toxic. No MTD is selected! \n")
             out = list(target = target, MTD = 99, p_est = matrix(NA, 
                 nrow = dim(npts)[1], ncol = dim(npts)[2]))
         }
@@ -360,7 +360,7 @@ get.oc.comb.kb <- function(target, p.true, ncohort, cohortsize,
     }
     else {
         if (length(selectdoses) == 0) {
-            cat("All tested doses are overly toxic. No MTD is selected! \n")
+            message("All tested doses are overly toxic. No MTD is selected! \n")
             out = list(target = target, MTD = 99, p_est = matrix(NA, 
                 nrow = dim(npts)[1], ncol = dim(npts)[2]))
         }
@@ -387,49 +387,49 @@ get.oc.comb.kb <- function(target, p.true, ncohort, cohortsize,
         }
     }
     if (JJ <= KK) {
-        # cat("True toxicity rate of dose combinations:\n")
+        # message("True toxicity rate of dose combinations:\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(p.true[, i], digits = 2, format = "f",
+        #   message(formatC(p.true[, i], digits = 2, format = "f",
         #               width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("selection percentage at each dose combination (%):\n")
+        # message("\n")
+        # message("selection percentage at each dose combination (%):\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(selpercent[, i], digits = 2, format = "f",
+        #   message(formatC(selpercent[, i], digits = 2, format = "f",
         #               width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("number of patients treated at each dose combination:\n")
+        # message("\n")
+        # message("number of patients treated at each dose combination:\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(apply(N, c(1, 2), mean)[, i], digits = 2,
+        #   message(formatC(apply(N, c(1, 2), mean)[, i], digits = 2,
         #               format = "f", width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("number of toxicity observed at each dose combination:\n")
+        # message("\n")
+        # message("number of toxicity observed at each dose combination:\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(apply(Y, c(1, 2), mean)[, i], digits = 2,
+        #   message(formatC(apply(Y, c(1, 2), mean)[, i], digits = 2,
         #               format = "f", width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("average number of toxicities:", formatC(t(sum(Y))/ntrial,
+        # message("\n")
+        # message("average number of toxicities:", formatC(t(sum(Y))/ntrial,
         #                                              digits = 1, format = "f"), "\n")
-        # cat("average number of patients:", formatC(t(sum(N))/ntrial,
+        # message("average number of patients:", formatC(t(sum(N))/ntrial,
         #                                            digits = 1, format = "f"), "\n")
-        # cat("selection percentage of MTD:", formatC(sum(selpercent[which(p.true ==
+        # message("selection percentage of MTD:", formatC(sum(selpercent[which(p.true ==
         #                                                                    target, arr.ind = TRUE)]), digits = 1, format = "f"),
         #     "\n")
-        # cat("percentage of patients treated at MTD:", formatC(sum(nptsdose[which(p.true ==
+        # message("percentage of patients treated at MTD:", formatC(sum(nptsdose[which(p.true ==
         #                                                                            target, arr.ind = TRUE)])/npts * 100, digits = 1,
         #                                                       format = "f"), "\n")
-        # cat("percentage of early stopping due to toxicity:",
+        # message("percentage of early stopping due to toxicity:",
         #     formatC(100 - sum(selpercent), digits = 2, format = "f"),
         #
         #     "\n")
         # ### Pan edit;
-        # cat("percentage of patients treated above MTD:", formatC(sum(nptsdose[which(p.true >
+        # message("percentage of patients treated above MTD:", formatC(sum(nptsdose[which(p.true >
         #                                                                               target, arr.ind = TRUE)])/npts * 100, digits = 1,
         #                                                          format = "f"), "\n")
-        # cat("percentage of patients treated below MTD:", formatC(sum(nptsdose[which(p.true <
+        # message("percentage of patients treated below MTD:", formatC(sum(nptsdose[which(p.true <
         #                                                                               target, arr.ind = TRUE)])/npts * 100, digits = 1,
         #                                                          format = "f"), "\n")
 
@@ -459,49 +459,49 @@ get.oc.comb.kb <- function(target, p.true, ncohort, cohortsize,
         ###
     }
     else {
-        # cat("True toxicity rate of dose combinations:\n")
+        # message("True toxicity rate of dose combinations:\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(p.true[, i], digits = 2, format = "f",
+        #   message(formatC(p.true[, i], digits = 2, format = "f",
         #               width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("selection percentage at each dose combination (%):\n")
+        # message("\n")
+        # message("selection percentage at each dose combination (%):\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(selpercent[, i], digits = 2, format = "f",
+        #   message(formatC(selpercent[, i], digits = 2, format = "f",
         #               width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("number of patients treated at each dose combination:\n")
+        # message("\n")
+        # message("number of patients treated at each dose combination:\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(apply(N, c(1, 2), mean)[, i], digits = 2,
+        #   message(formatC(apply(N, c(1, 2), mean)[, i], digits = 2,
         #               format = "f", width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("number of toxicity observed at each dose combination:\n")
+        # message("\n")
+        # message("number of toxicity observed at each dose combination:\n")
         # for (i in 1:dim(p.true)[2]) {
-        #   cat(formatC(apply(Y, c(1, 2), mean)[, i], digits = 2,
+        #   message(formatC(apply(Y, c(1, 2), mean)[, i], digits = 2,
         #               format = "f", width = 5), sep = "  ", "\n")
         # }
-        # cat("\n")
-        # cat("average number of toxicities:", formatC(t(sum(Y))/ntrial,
+        # message("\n")
+        # message("average number of toxicities:", formatC(t(sum(Y))/ntrial,
         #                                              digits = 1, format = "f"), "\n")
-        # cat("average number of patients:", formatC(t(sum(N))/ntrial,
+        # message("average number of patients:", formatC(t(sum(N))/ntrial,
         #                                            digits = 1, format = "f"), "\n")
-        # cat("selection percentage of MTD:", formatC(sum(selpercent[which(p.true ==
+        # message("selection percentage of MTD:", formatC(sum(selpercent[which(p.true ==
         #                                                                    target, arr.ind = TRUE)]), digits = 1, format = "f"),
         #     "\n")
-        # cat("percentage of patients treated at MTD:", formatC(sum(nptsdose[which(p.true ==
+        # message("percentage of patients treated at MTD:", formatC(sum(nptsdose[which(p.true ==
         #                                                                            target, arr.ind = TRUE)])/npts * 100, digits = 1,
         #                                                       format = "f"), "\n")
-        # cat("percentage of early stopping due to toxicity:",
+        # message("percentage of early stopping due to toxicity:",
         #     formatC(100 - sum(selpercent), digits = 2, format = "f"),
         #
         #     "\n")
         # ### Pan edit;
-        # cat("percentage of patients treated above MTD:", formatC(sum(nptsdose[which(p.true >
+        # message("percentage of patients treated above MTD:", formatC(sum(nptsdose[which(p.true >
         #                                                                               target, arr.ind = TRUE)])/npts * 100, digits = 1,
         #                                                          format = "f"), "\n")
-        # cat("percentage of patients treated below MTD:", formatC(sum(nptsdose[which(p.true <
+        # message("percentage of patients treated below MTD:", formatC(sum(nptsdose[which(p.true <
         #                                                                               target, arr.ind = TRUE)])/npts * 100, digits = 1,
         #                                                          format = "f"), "\n")
         #
