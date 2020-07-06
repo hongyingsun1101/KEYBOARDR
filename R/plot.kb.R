@@ -15,8 +15,8 @@
 #' (3) For select.mtd.kb() and select.mtd.comb.kb(): an infographic showing the
 #' estimates of the toxicity probability for each dose, with corresponding
 #' 95\% credible intervals.
-#' 
-#' 
+#'
+#'
 #'
 #' @param x The object (returned by another function) to be plotted.
 #' @param ... Ignored arguments.
@@ -54,7 +54,7 @@
 #' p.true <- matrix(c(0.01, 0.03, 0.10, 0.20, 0.30,
 #'                    0.03, 0.05, 0.15, 0.30, 0.60,
 #'                    0.08, 0.10, 0.30, 0.60, 0.75), byrow=TRUE, ncol=5)
-#' oc.comb <- get.oc.comb.kb(target=0.3, p.true=p.true, ncohort=20, 
+#' oc.comb <- get.oc.comb.kb(target=0.3, p.true=p.true, ncohort=20,
 #'  cohortsize=3, n.earlystop=12, startdose=c(1, 1), ntrial=100)
 #' summary.kb(oc.comb)
 #'
@@ -172,15 +172,18 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
             ## why not "number of toxicities" too?
         }
     }
-    
+
 
     ## Plotting for get.oc.comb.kb()
     else if(!is.null(objectPlot$pcs)) { # | !is.null(objectPlot$pcs.contour)) {
 
         if (!requireNamespace("epade", quietly = TRUE)) {
                     stop("Package \"epade\" needed for this function to work.",
-             "Please install it.", call. = FALSE)
-
+             #"Please install it.", call. = FALSE)
+            "Please install it with this command: [install.packages('epade', repos = 'http://cran.us.r-project.org', dependencies = TRUE)]", call. = FALSE)
+            if (!requireNamespace("epade", quietly = TRUE)) {
+                stop(paste("Package: ", "epade", " not found!!!", sep = ""))
+            }
         }
         # dev.new(); op <- par(no.readonly = TRUE); dev.off(); par(op)
         #par(mar=c(0,0,0,0),oma=c(0,0,0,0))
@@ -422,8 +425,10 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
                 else{ ## select.mtd.comb.kb()
                     if (!requireNamespace("epade", quietly = TRUE)) {
                                 stop("Package \"epade\" needed for this function to work.",
-             "Please install it.", call. = FALSE)
-
+             "Please install it with this command: [install.packages('epade', repos = 'http://cran.us.r-project.org', dependencies = TRUE)]", call. = FALSE)
+                        if (!requireNamespace("epade", quietly = TRUE)){
+                           stop(paste("Package: ", "epade", " not found!!!", sep = ""))
+                        }
                     }
 
                     requireNamespace("epade", quietly = TRUE)
@@ -526,7 +531,7 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
 
             ## number of toxicities
             bplot = barplot(objectPlot$ntox,
-                            ylab = "number of toxicities", 
+                            ylab = "number of toxicities",
                             ylim = c(0, max(objectPlot$ntox)),
                             cex.names = 1, beside = FALSE, xaxt = "n", cex.lab = 1.3)
             axis(1, at = bplot, labels = seq(1, length(objectPlot$ntox)))
@@ -534,7 +539,7 @@ plot.kb <- function(x, ..., name = deparse(substitute(x))) {
             mtext("dose level", 1, line = 2, cex = 1.3)
 
             bplot = barplot(objectPlot$neff,
-                            ylab = "number of efficacies", 
+                            ylab = "number of efficacies",
                             ylim = c(0, max(objectPlot$neff)),
                             cex.names = 1, beside = FALSE, xaxt = "n", cex.lab = 1.3)
             axis(1, at = bplot, labels = seq(1, length(objectPlot$ntox)))
